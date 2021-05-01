@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'Notifications',
     'Posts',
     'Groups',
+    # 'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'SocialNetwork.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME':'SocialNetwork',
         'USER':'root',
-        'PASSWORD':'0175471031',
+        'PASSWORD':'Meroronasasa.41211',
         'Host':'localhost',
 
         
