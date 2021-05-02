@@ -1,12 +1,24 @@
 {% extends "layouts/main.html"%}
+
+
+{% load crispy_forms_tags %}
 {%block body%}
-<a href={% url 'create' %} type="button"  class="btn btn-primary"> Create Post
-</a>
+
+<form action="{% url 'create' %}" method="post">
+
+    {%csrf_token%}
+   {{ form|crispy }}
+
+
+    <button type="submit" class="btn btn-primary">Add a Post</button>
+</form>
 
 <div class="col-md-8 mt-3 left">
 
+
  {%for post in posts%}  
  <div class="card mb-4">
+ 
                 <div class="card-body">
                 <div class="dropdown d-flex justify-content-end">
                               <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <i class="bi bi-three-dots  hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i> </a>
