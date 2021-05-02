@@ -8,7 +8,7 @@ from .forms import PostsCreateForm
 def index(request):
     posts= Post.objects.order_by('-creation_date_time')
     print(posts)
-    form = PostsCreateForm(request.POST or None)
+    form = PostsCreateForm()
     return render(request,"posts/index.html",
     {
         "posts":posts,
