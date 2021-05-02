@@ -6,14 +6,13 @@ from .forms import PostsCreateForm
 # Create your views here.
 
 def index(request):
-    posts= Post.objects.all()
+    posts= Post.objects.order_by('-creation_date_time')
     print(posts)
-    
+    form = PostsCreateForm(request.POST or None)
     return render(request,"posts/index.html",
     {
         "posts":posts,
-       
-
+        "form":form
     })
 
 def create(request):
@@ -24,3 +23,6 @@ def create(request):
     return render(request,"posts/create.html",{
         "form":form
     })
+
+
+
