@@ -7,21 +7,35 @@
 
  {%for post in posts%}  
  <div class="card mb-4">
- 
-
-
                 <div class="card-body">
-                
+                <div class="dropdown d-flex justify-content-end">
+                              <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <i class="bi bi-three-dots  hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i> </a>
+                              <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                            
+                                
+                                  
+                                    
+                                        <a  class="dropdown-item" href="{% url 'edit' post.id %}" >
+                                        <i class="bi bi-pencil"></i> Edit Post 
+                                        </a> 
+                                  
+                                    
+                                    
+                                  
+                                        <a class="dropdown-item"  href="{% url 'delete' post.id %}">
+                                        <i class="bi bi-trash"></i> Delete
+                                        </a> 
+                                    
+                              
+                              </div>
+                            </div>
                        <p class="card-text">{{post.content}}</p>
                         <p class="card-text  text-muted h6"> {{post.user_id_id}} |
                         {{post.creation_date}}</p>
-                       
-                            
-                            {% comment %} <td>{{post.post_image}}</td> {% endcomment %}
                               <img src="{{ post.post_image}}"
                           class="img-responsive"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> 
                        
-                
+                          
                    </div>
 </div>
    {% endfor %}

@@ -24,3 +24,18 @@ def create(request):
     return render(request,"posts/create.html",{
         "form":form
     })
+def destroy(request,id):
+    post=Post.objects.get(id=id) 
+    post.delete()  
+    return redirect("index")
+def edit(request,id):
+    post=Post.objects.get(id=id) 
+    form = PostsCreateForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect("index")
+
+    return render(request,"posts/edit.html",{
+        "form" : form,
+        "post" : post
+    })
