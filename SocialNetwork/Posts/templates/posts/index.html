@@ -1,0 +1,18 @@
+  </thead> {%for post in posts%} 
+  <tbody>
+
+                   <tr>
+                            <td>{{post.id}}</td>
+                            <td>{{post.user_id_id}}</td>
+                            <td>{{post.grou_id}}</td>
+                            <td>{{post.content}}</td>
+                             <td>{{post.creation_date}}</td>
+                            {% comment %} <td>{{post.post_image}}</td> {% endcomment %}
+                              <img src="{{ post.post_image }}"
+                          class="img-responsive" style="width: 50%; float: left; margin-right: 10px;" /> 
+                        </tr>
+                        <br>
+                    </tbody> {% endfor %}
+
+<a href={% url 'create' %} type="button"> Create Post
+</a>
