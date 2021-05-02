@@ -1,18 +1,30 @@
-  </thead> {%for post in posts%} 
-  <tbody>
-
-                   <tr>
-                            <td>{{post.id}}</td>
-                            <td>{{post.user_id_id}}</td>
-                            <td>{{post.grou_id}}</td>
-                            <td>{{post.content}}</td>
-                             <td>{{post.creation_date}}</td>
-                            {% comment %} <td>{{post.post_image}}</td> {% endcomment %}
-                              <img src="{{ post.post_image }}"
-                          class="img-responsive" style="width: 50%; float: left; margin-right: 10px;" /> 
-                        </tr>
-                        <br>
-                    </tbody> {% endfor %}
-
-<a href={% url 'create' %} type="button"> Create Post
+{% extends "layouts/main.html"%}
+{%block body%}
+<a href={% url 'create' %} type="button"  class="btn btn-primary"> Create Post
 </a>
+
+<div class="col-md-8 mt-3 left">
+
+ {%for post in posts%}  
+ <div class="card mb-4">
+ 
+
+
+                <div class="card-body">
+                
+                       <p class="card-text">{{post.content}}</p>
+                        <p class="card-text  text-muted h6"> {{post.user_id_id}} |
+                        {{post.creation_date}}</p>
+                       
+                            
+                            {% comment %} <td>{{post.post_image}}</td> {% endcomment %}
+                              <img src="{{ post.post_image}}"
+                          class="img-responsive"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> 
+                       
+                
+                   </div>
+</div>
+   {% endfor %}
+   </div>
+
+{% endblock %}

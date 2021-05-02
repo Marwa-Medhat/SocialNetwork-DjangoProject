@@ -3,11 +3,12 @@ from django.contrib.auth.models import User
 from Groups.models import Group 
 # Create your models here.
 class Post(models.Model):
-        user_id=models.ForeignKey(User, related_name="userPosts", on_delete=models.CASCADE);
-        content = models.TextField()
-        creation_date = models.DateField(auto_now=True)
-        Group_id = models.ForeignKey(Group,related_name="group", on_delete=models.CASCADE , blank=True, null=True)
-        post_image = models.ImageField(upload_to='images/', max_length=50 ,blank=True, null=True)
+
+    user_id=models.ForeignKey(User, related_name="userPosts", on_delete=models.CASCADE);
+    content = models.TextField()
+    creation_date = models.DateField(auto_now=True)
+    Group_id = models.ForeignKey(Group,related_name="group", on_delete=models.CASCADE , blank=True, null=True)
+    post_image = models.ImageField(upload_to='images',null=True,blank=True)
 
 
 
