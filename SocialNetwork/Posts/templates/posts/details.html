@@ -1,29 +1,13 @@
 {% extends "layouts/main.html"%}
 
 
-{% load crispy_forms_tags %}
+
 {%block body%}
 
-<form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
 
-    {%csrf_token%}
-   <div class="card w-75">
-      <div class="card-body" >
-        {{form.user_id |as_crispy_field}}
-        {{ form.content|as_crispy_field }}
-        {{form.post_image |as_crispy_field}}
-         <button type="submit" class="btn btn-primary">Add a Post</button>
-      </div>
-       
-    </div>
-
-   
-</form>
 
 <div class="col-md-8 mt-3 left">
 
-
- {%for post in posts%}  
  <div class="card mb-4 ">
    
     <div class="card-body ">
@@ -40,22 +24,26 @@
                 </div>
                               
         </div>
+   
+   
          <div class="card-header border-bottom">
            <p class="card-text text-primary h5"> {{post.user_id}}</p>
-                 <p class="card-text  text-muted "> {{post.creation_date_time}}</p>  
+                 <p class="card-text  text-muted "> {{post.creation_date_time}} </p>  
      </div>   
           
           <div class="card-body">   
           {% if post.post_image %}              
         <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> {% endif %}
-        </br><p class="card-text  mt-2 h6">{{post.content}} <a href="{% url 'details' post.id %}">More</a></p>
+        </br><p class="card-text  mt-2 h6">{{post.content}}</p>
        
         </div>
                        
         </div>                  
  </div>
 
-{% endfor %}
+
+<a href="{% url 'index' %}">Back</a>
 </div>
 
 {% endblock %}
+

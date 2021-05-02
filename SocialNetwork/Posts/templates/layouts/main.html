@@ -6,11 +6,46 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body class="bg-light">
+<body class="bg-light ">
 <div class="navbar navbar-expand-lg navbar-light bg-primary">
-<h3 class="  mx-auto text-white"> <i class="bi bi-house ml-4"></i>My Home </h3>
+<button type="button" data-toggle="collapse" class="btn btn-primary"  data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
+	         <i class="bi bi-list"></i>
+	         
+	        </button>
+<h3 class="mx-auto text-white"> <i class="bi bi-house ml-4"></i>My Home </h3>
+ <div class="dropdown" >
+            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false" ><i class="bi bi-person text-white   "></i> </a>
+                <div class="dropdown-menu " >
+                       <a class="dropdown-item " href="#" >
+                          <i class="bi bi-box-arrow-in-right"></i> 
+                        </a> 
+                      
+                </div>
+                              
+        </div>
+
        
 </div>
+		<div class="wrapper d-flex align-items-stretch">
+			<nav class="btn">
+				<div class="custom-menu">
+					
+        </div>
+				<div class="p-4 pt-5 collapse multi-collapse" id="multiCollapseExample2">
+		  	
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	             <a href="#" ><i class="bi bi-person"></i>My Profile</a>
+	           
+	          <li>
+	              <a href="#" <i class="bi bi-people-fill"></i> Groupes</a>
+	          </li>
+            </ul>
+	      </div>
+    	</nav>
+		
+     	
+
 <div class="container mt-4" >
 {%block body%}
 {% endblock %}

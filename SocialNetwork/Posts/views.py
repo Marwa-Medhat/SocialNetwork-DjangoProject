@@ -38,6 +38,14 @@ def edit(request,id):
         "form" : form,
         "post" : post
     })
+def details(request,id):
+    post=Post.objects.get(id=id) 
+    form = PostsCreateForm()
+    return render(request,"posts/details.html",
+    {
+        "post":post,
+        "form":form
+    })
 
 
 

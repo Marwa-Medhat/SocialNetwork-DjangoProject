@@ -12,7 +12,7 @@ class Post(models.Model):
     content = models.TextField()
     creation_date_time = models.DateTimeField(auto_now=True)
     Group_id = models.ForeignKey(Group,related_name="group", on_delete=models.CASCADE , blank=True, null=True)
-    post_image = models.ImageField(upload_to='images',null=True,blank=True)
+    post_image = models.ImageField(upload_to="images/",null=True,blank=True)
 
 
 
