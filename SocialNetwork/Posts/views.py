@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from .models import Post
 from .forms import PostsCreateForm
-
+from django.urls import reverse_lazy,reverse
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -40,4 +41,9 @@ def edit(request,id):
     })
 
 
+
+def like(request,pk):
+    post= get_object_or_404(Post, id=request.POST.get('post_id')) #whenever "post_id" is clicked #esm el button
+    #post.likes.add(request.user)
+    re
 

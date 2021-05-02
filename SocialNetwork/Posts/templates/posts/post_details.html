@@ -1,0 +1,13 @@
+{% extends "layouts/main.html"%}
+{% load crispy_forms_tags %}
+{%block body%}
+
+
+
+<form action="{% url 'like_post'%}" method="POST">
+    {%csrf_token%}
+    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like </button>
+
+<form>
+
+{% endblock %}
