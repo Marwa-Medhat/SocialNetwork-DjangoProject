@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {%block body%}
 <h1>Edit Post</h1>
-<form action="{% url 'edit' post.id %}" method="post">
+<form action="{% url 'edit' post.id %}" method="post" enctype="multipart/form-data">
 
 
     {%csrf_token%}

@@ -1,37 +1,13 @@
 {% extends "layouts/main.html"%}
 
 
-{% load crispy_forms_tags %}
+
 {%block body%}
-        {%if request.user.is_authenticated %}
 
-        <h3>Welcome {{request.user}}</h3>
-        {% endif %}
-       
-<form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
 
-    {%csrf_token%}
-   <div class="card w-75">
-      <div class="card-body" >
-        {{form.user_id |as_crispy_field}}
-        {{ form.content|as_crispy_field }}
-        {{form.post_image |as_crispy_field}}
-         <button type="submit" class="btn btn-primary">Add a Post</button>
-      </div>
-       
-    </div>
-
-   
-</form>
-{% comment %} {% if post_obj %}
-  <h3>Succesfully uploaded </h3>
-  <img src="{{ post_obj.post_image.url}}"  alt="connect" style="max-height:300px">
-{% endif %} {% endcomment %}
 
 <div class="col-md-8 mt-3 left">
 
-
- {%for post in posts%}  
  <div class="card mb-4 ">
    
     <div class="card-body ">
@@ -46,24 +22,40 @@
                             <i class="bi bi-trash "></i> Delete
                         </a> 
                 </div>
+                
                               
         </div>
+   
+   
          <div class="card-header border-bottom">
            <p class="card-text text-primary h5"> {{post.user_id}}</p>
-                 <p class="card-text  text-muted "> {{post.creation_date_time}}</p>  
+                 <p class="card-text  text-muted "> {{post.creation_date_time}} </p>  
      </div>   
           
           <div class="card-body">   
           {% if post.post_image %}              
         <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> {% endif %}
-        </br><p class="card-text  mt-2 h6">{{post.content}} <a href="{% url 'details' post.id %}">More</a></p>
+        </br><p class="card-text  mt-2 h6">{{post.content}}</p>
+        {{total_likes}} Like
        
+       <form action="{% url 'like_post' %}"  method="POST">
+    {%csrf_token%}
+    {% if is_liked %}
+    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger btn-sm">Unlike </button>
+    {% else %}
+    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like </button>
+    {% endif %}
+        <form>
         </div>
                        
         </div>                  
- </div>
+        </div>
 
-{% endfor %}
+
+
+
+<a href="{% url 'index' %}">Back</a>
 </div>
 
 {% endblock %}
+

@@ -40,10 +40,39 @@ def edit(request,id):
         "post" : post
     })
 
+def details(request,id):
+    post=Post.objects.get(id=id) 
+    form = PostsCreateForm()
+    is_liked=False
+    if post.likes.filter(id=request.user.id).exists():
+         is_liked=True
+    
+    return render(request,"posts/details.html",
+    {
+        "post":post,
+        "form":form,
+        'is_liked':is_liked,
+        'total_likes': post.total_likes(),
+    })
 
 
-def like(request,pk):
+
+def like_post(request):
     post= get_object_or_404(Post, id=request.POST.get('post_id')) #whenever "post_id" is clicked #esm el button
-    #post.likes.add(request.user)
-    re
+    #unlike post
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked=False
+    else:
+        #like post
+        post.likes.add(request.user)
+        is_liked=True
+    return render(request,"posts/details.html",
+    {
+        "post":post,
+        'is_liked':is_liked
+    })
+    
+    # return HttpResponseRedirect(post.get_absolute_url())
+
 
