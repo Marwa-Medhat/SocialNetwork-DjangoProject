@@ -1,0 +1,62 @@
+{% extends "layouts/main.html"%}
+
+
+{% load crispy_forms_tags %}
+{%block body%}
+{% if request.user.is_authenticated %}
+{% comment %} <p> {{form.user_id }}</p> {% endcomment %}
+<form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+
+    {%csrf_token%}
+   <div class="card w-75">
+      <div class="card-body" >
+        {{request.user.username }}
+        {{ form.content|as_crispy_field }}
+        {{form.post_image |as_crispy_field}}
+         <button type="submit" class="btn btn-primary">Add a Post</button>
+      </div>
+       
+    </div>
+
+   
+</form>
+{% endif %}
+<div class="col-md-8 mt-3 left">
+
+
+ {%for post in posts%}  
+ <div class="card mb-4 ">
+   
+    <div class="card-body ">
+      
+        <div class="dropdown float-right">
+            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <i class="bi bi-three-dots  hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i> </a>
+                <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                        <a  class="dropdown-item text-primary" href="{% url 'edit' post.id %}" >
+                            <i class="bi bi-pencil"></i> Edit Post 
+                        </a> 
+                        <a class="dropdown-item text-danger"  href="{% url 'delete' post.id %}" >
+                            <i class="bi bi-trash "></i> Delete
+                        </a> 
+                </div>
+                              
+        </div>
+         <div class="card-header border-bottom">
+           <p class="card-text text-primary h5"> {{post.user_id}}</p>
+                 <p class="card-text  text-muted "> {{post.creation_date_time}}</p>  
+     </div>   
+          
+          <div class="card-body">   
+          {% if post.post_image %}              
+        <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> {% endif %}
+        </br><p class="card-text  mt-2 h6">{{post.content}} <a href="{% url 'details' post.id %}">More</a></p>
+       
+        </div>
+                       
+        </div>                  
+ </div>
+
+{% endfor %}
+</div>
+
+{% endblock %}

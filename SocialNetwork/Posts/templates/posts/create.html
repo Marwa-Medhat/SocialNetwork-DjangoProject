@@ -1,0 +1,9 @@
+{% extends "layouts/main.html"%} {% load crispy_forms_tags %} {%block body%} {%
+if request.user.is_authenticated %}
+<form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+  {%csrf_token%} {{request.user.username }} {{ form.content|as_crispy_field }}
+  {{form.post_image |as_crispy_field}}
+
+  <button type="submit" class="btn btn-primary">Add a Post</button>
+</form>
+{% endif %} {% endblock %}
