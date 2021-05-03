@@ -20,7 +20,9 @@ class Comment(models.Model):
     post_id= models.ForeignKey(Post, related_name="post", on_delete=models.CASCADE)
     content = models.TextField()
     creation_date_time = models.DateTimeField(auto_now=True)
-
+    
+ 
+    
 class Likes(models.Model):
      post_id= models.ForeignKey(Post, related_name="Likedpost", on_delete=models.CASCADE)
      user_id = models.ForeignKey(User, related_name="likedUser", on_delete=models.CASCADE);
