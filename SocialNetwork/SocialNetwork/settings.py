@@ -28,8 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+LOGIN_REDIRECT_URL = "/Users/index"
+LOGIN_URL = "/login"
 # Application definition
+###################################################################
+AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
     'Users',
@@ -83,12 +86,12 @@ WSGI_APPLICATION = 'SocialNetwork.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'SocialNetwork',
-        'USER':'root',
-        'PASSWORD':'Meroronasasa.41211',
-        'Host':'localhost',
+        'NAME': 'SocialNetwork',
+        'USER': 'root',
+        'PASSWORD': 'Meroronasasa.41211',
+        'Host': 'localhost',
 
-        
+
     }
 }
 
