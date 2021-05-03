@@ -36,7 +36,9 @@
           {% if post.post_image %}              
         <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> {% endif %}
         </br><p class="card-text  mt-2 h6">{{post.content}}</p>
-        {{total_likes}} Like
+          <hr>
+       
+       <p style="color:grey"> {{total_likes}} Like </p>
        
        <form action="{% url 'like_post' %}"  method="POST">
     {%csrf_token%}
