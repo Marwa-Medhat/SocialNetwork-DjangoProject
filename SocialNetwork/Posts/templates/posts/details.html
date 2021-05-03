@@ -5,7 +5,7 @@
   <div class="card mb-4 ">
     <div class="card-body  ">
       <div class="dropdown float-right">
-          <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <i class="bi bi-three-dots  hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i> </a>
+           <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <i class="bi bi-three-dots  hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i> </a>
             <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
               <a  class="dropdown-item text-primary" href="{% url 'edit' post.id %}" >
                 <i class="bi bi-pencil"></i> Edit Post 
@@ -14,50 +14,62 @@
                 <i class="bi bi-trash "></i> Delete
               </a> 
             </div>
-        </div>
+      </div>
         <div class="card-header border-bottom">
           <p class="card-text text-primary h5"> {{post.user_id}}</p>
             <p class="card-text  text-muted "> {{post.creation_date_time}} </p>  
         </div>   
+        <div > 
+              {% if post.post_image %}
+                  <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> {% endif %}
+                  </br><p class="card-text  mt-2 h6">{{post.content}}</p>
+                  <hr>
+                  <form action="{% url 'like_post' %}"  method="POST">
+                    {%csrf_token%}
+                      {% if is_liked %}
+                         <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger btn-sm"> <i class="bi bi-hand-thumbs-down"></i>Unlike </button>
+                         
+                        {% else %}
+                          <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm"> <i class="bi bi-hand-thumbs-up"></i>Like </button>
+                      {% endif %}
+                      </form>
+        </div>  
+         <p style="color:grey"> {{total_likes}} Like </p>            
+         <hr> 
           
-        <div class="card-body">   
-          {% if post.post_image %}              
-          <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> {% endif %}
-          </br><p class="card-text  mt-2 h6">{{post.content}}</p>
-        </div>
-        <div class="card-body border-top"> 
-          <h3>Comments....</h3> 
-          <div >
+          <div class="card-body ">         
             {% if not post.post.all %}
-            <p>there is no comment</p>
-            {% else %}
-             {% for comment in post.post.all %}
-             <strong>{{comment.post_id}}-{{comment.creation_date_time}}</strong> </br>
-             {{comment.content}}  
-          </div>
-           {% endfor %}
-           {% endif %}
+              <p></p>
+               {% else %}
+              {% for comment in post.post.all %}
+                 <div class="ml-4"><strong>{{comment.post_id}}-{{comment.creation_date_time}}</div></strong> 
+                 <div class="ml-4">{{comment.content}} </div> 
+          
+              {% endfor %}
+             
+            {% endif %}
            
-          <div class="card-body">
-            <form action="{% url 'details' post.id %}" method="post">
+            <form action="{% url 'comment' post.id %}" method="post">
               {% load crispy_forms_tags %}
               {%csrf_token%}
-               <div class="card ">
+              
                   <div class="card-body" >
            
                    {{ comment|crispy}}
-                   <button type="submit" class="btn btn-primary" value="{{post.id}}">Add a comment</button>
+                   <button type="submit" class="btn btn-primary rounded-pill float-right" value="{{post.id}}">Add a comment</button>
                   </div>  
-                </div>
+               
             </form>  
           </div> 
-             
-        </div>
-      </div>
-    </div>
+      </div>       
+    </div>   
   </div>
-  <a href="{% url 'index' %}">Back</a>
-</div>  
+  
+     
+ 
+
+ <a class="btn btn-warning ml-5 mb-5" href="{% url 'index' %}">Back</a>
+</div>
 
 {% endblock %}
 

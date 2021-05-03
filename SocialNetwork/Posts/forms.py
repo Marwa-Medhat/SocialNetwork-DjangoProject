@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Post ,Comment
+from .models import Post , Comment
 
 class PostsCreateForm(forms.ModelForm):
     content = forms.CharField(label ="", widget = forms.Textarea(
@@ -13,18 +13,20 @@ class PostsCreateForm(forms.ModelForm):
     class Meta:
         model = Post
         fields="__all__"
-        # widgets = {
+        widgets = {
         # 'user_id': forms.HiddenInput(),
+        # 'likes':forms.HiddenInput(),
         
-        #  }
+         }
         
 class CommentsCreateForm(forms.ModelForm):
     content = forms.CharField(label ="", widget = forms.Textarea(
     attrs ={
-        'class':'form-control',
+        'class':'form-control rounded-pill',
         'placeholder':'Comment here !',
-        'rows':4,
-        'cols':50
+        'rows':2,
+        'cols':10,
+        
     }))
     
     class Meta:
