@@ -70,7 +70,8 @@ def like_post(request):
     return render(request,"posts/details.html",
     {
         "post":post,
-        'is_liked':is_liked
+        'is_liked':is_liked 
+        ,'total_likes': post.total_likes()
     })
     
     # return HttpResponseRedirect(post.get_absolute_url())
