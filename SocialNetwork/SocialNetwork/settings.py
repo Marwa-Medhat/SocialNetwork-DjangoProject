@@ -35,19 +35,21 @@ LOGIN_URL = "/login"
 AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
-    'Users',
+    # 'Users',
     'Chats',
     'Notifications',
     'Posts',
     'Groups',
     # 'accounts',
     'crispy_forms',
+    'Users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

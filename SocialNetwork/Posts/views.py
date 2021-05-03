@@ -19,6 +19,9 @@ def index(request):
 
 
 def create(request):
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('mustauth')
     form = PostsCreateForm(request.POST or None, user_id=request.user.username)
     if form.is_valid():
         form.save()
@@ -80,3 +83,7 @@ def like_post(request):
                       'is_liked': is_liked,
                       'total_likes': post.total_likes()
                   })
+
+
+def must_authenticate_view(request):
+    return render(request, 'Posts/must_auth.html', {})

@@ -4,11 +4,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
 from django.contrib import messages
 # from .models import UserDetails
+from .models import CustomUser
 
 
 # Create your views here.
 # profile page
 def index(request):
+    # obj = CustomUser.object.get(user=request.user)
     return render(request, 'Users/index.html')
 
 
