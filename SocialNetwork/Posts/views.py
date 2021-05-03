@@ -6,16 +6,19 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 
+
 def index(request):
     
     posts= Post.objects.order_by('-creation_date_time')
     print(posts)
     form = PostsCreateForm()
-    return render(request,"posts/index.html",
-    {
-        "posts":posts,
-        "form":form
-    })
+    print(form)
+    return render(request, "posts/index.html",
+                  {
+                      "posts": posts,
+                      "form": form
+                  })
+
 
 def create(request):
     
@@ -24,12 +27,15 @@ def create(request):
        
         form.save()
         return redirect("index")
-    return render(request,"posts/create.html",{
-        "form":form
+
+    return render(request, "posts/create.html", {
+        "form": form,
     })
-def destroy(request,id):
-    post=Post.objects.get(id=id) 
-    post.delete()  
+
+
+def destroy(request, id):
+    post = Post.objects.get(id=id)
+    post.delete()
     return redirect("index")
 def edit(request,id):
     post=Post.objects.get(id=id)
@@ -39,9 +45,9 @@ def edit(request,id):
         form.save()
         return redirect("index")
 
-    return render(request,"posts/edit.html",{
-        "form" : form,
-        "post" : post
+    return render(request, "posts/edit.html", {
+        "form": form,
+        "post": post
     })
 
 def details(request,id):
@@ -78,9 +84,9 @@ def like_post(request):
     #unlike post
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
-        is_liked=False
+        is_liked = False
     else:
-        #like post
+        # like post
         post.likes.add(request.user)
         is_liked=True
     # return render(request,"posts/details.html",
