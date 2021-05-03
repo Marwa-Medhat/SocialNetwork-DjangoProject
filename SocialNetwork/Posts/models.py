@@ -9,7 +9,7 @@ class Post(models.Model):
     user_id = models.ForeignKey(
         CustomUser, related_name="userPosts", on_delete=models.CASCADE)
     content = models.TextField()
-    creation_date_time = models.DateField(auto_now=True)
+    creation_date_time = models.DateTimeField(auto_now=True)
     Group_id = models.ForeignKey(
         Group, related_name="group", on_delete=models.CASCADE, blank=True, null=True)
     post_image = models.ImageField(
