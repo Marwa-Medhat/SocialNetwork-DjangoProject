@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from Groups.models import Group 
 from datetime import datetime  
 from django.utils import timezone   
+from django.urls import reverse
 
 
 
@@ -19,6 +20,8 @@ class Post(models.Model):
     def total_likes(self):  
         return self.likes.count()
 
+    def get_absolute_url(self):
+        return reverse('details', kwargs={'id': self.id})
 
 
 class Comment(models.Model):
@@ -31,7 +34,7 @@ class BadWords(models.Model):
     word= models.CharField( max_length=50)
 
 
-class Likes(models.Model):
-     post_id= models.ForeignKey(Post, related_name="Likedpost", on_delete=models.CASCADE)
-     user_id = models.ForeignKey(User, related_name="likedUser", on_delete=models.CASCADE);
+# class Likes(models.Model):
+#      post_id= models.ForeignKey(Post, related_name="Likedpost", on_delete=models.CASCADE)
+#      user_id = models.ForeignKey(User, related_name="likedUser", on_delete=models.CASCADE);
      

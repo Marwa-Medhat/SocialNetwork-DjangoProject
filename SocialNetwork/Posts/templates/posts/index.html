@@ -55,8 +55,12 @@
           
           <div class="card-body">   
           {% if post.post_image %}              
-        <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> {% endif %}
-        </br><p class="card-text  mt-2 h6">{{post.content}} <a href="{% url 'details' post.id %}">More</a></p>
+        <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;"/> {% endif %}
+        </br><p class="card-text  mt-2 h6">{{post.content}} <a href="{% url 'details' post.pk %}">More</a></p>
+
+       
+
+       
        
         </div>
                        

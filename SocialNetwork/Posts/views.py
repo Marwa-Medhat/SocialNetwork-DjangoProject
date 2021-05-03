@@ -13,7 +13,8 @@ def index(request):
     return render(request,"posts/index.html",
     {
         "posts":posts,
-        "form":form
+        "form":form,
+      
     })
 
 def create(request):
@@ -46,7 +47,6 @@ def details(request,id):
     is_liked=False
     if post.likes.filter(id=request.user.id).exists():
          is_liked=True
-    
     return render(request,"posts/details.html",
     {
         "post":post,
@@ -67,13 +67,7 @@ def like_post(request):
         #like post
         post.likes.add(request.user)
         is_liked=True
-    return render(request,"posts/details.html",
-    {
-        "post":post,
-        'is_liked':is_liked 
-        ,'total_likes': post.total_likes()
-    })
-    
-    # return HttpResponseRedirect(post.get_absolute_url())
+    return HttpResponseRedirect(post.get_absolute_url())
+    #return redirect("details",id=post.id)
 
 
