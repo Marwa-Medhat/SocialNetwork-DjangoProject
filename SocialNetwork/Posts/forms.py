@@ -10,3 +10,4 @@ class PostsCreateForm(forms.ModelForm):
         # widgets = {
         #     'user_id': forms.HiddenInput(),
         # }
+        # fields=['content','post_image','Group_id','user_id'

@@ -24,7 +24,7 @@ def create(request):
         return redirect("index")
 
     return render(request, "posts/create.html", {
-        "form": form
+        "form": form,
     })
 
 
@@ -50,8 +50,32 @@ def edit(request, id):
 def details(request, id):
     post = Post.objects.get(id=id)
     form = PostsCreateForm()
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        is_liked = True
     return render(request, "posts/details.html",
                   {
                       "post": post,
-                      "form": form
+                      "form": form,
+                      'is_liked': is_liked,
+                      'total_likes': post.total_likes(),
+                  })
+
+
+def like_post(request):
+    # whenever "post_id" is clicked #esm el button
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    # unlike post
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        # like post
+        post.likes.add(request.user)
+        is_liked = True
+    return render(request, "posts/details.html",
+                  {
+                      "post": post,
+                      'is_liked': is_liked,
+                      'total_likes': post.total_likes()
                   })
