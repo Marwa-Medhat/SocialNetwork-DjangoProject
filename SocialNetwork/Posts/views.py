@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
 from .forms import PostsCreateForm
 
 
 # Create your views here.
+
 
 def index(request):
     posts = Post.objects.order_by('-creation_date_time')
