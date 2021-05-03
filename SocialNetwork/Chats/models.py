@@ -6,3 +6,4 @@ class Chat(models.Model):
     RecieverUser = models.ForeignKey(User,related_name="recieverUser", on_delete=models.CASCADE)
     content = models.TextField()
     date = models.DateTimeField( auto_now=True)
+    
