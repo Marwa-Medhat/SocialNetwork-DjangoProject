@@ -35,19 +35,21 @@ LOGIN_URL = "/login"
 AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
-    'Users',
+    # 'Users',
     'Chats',
     'Notifications',
     'Posts',
     'Groups',
     # 'accounts',
     'crispy_forms',
+    'Users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -88,9 +90,9 @@ WSGI_APPLICATION = 'SocialNetwork.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'socialnetwork',
+        'NAME': 'SocialNetwork',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'Meroronasasa.41211',
         'Host': 'localhost',
 
 

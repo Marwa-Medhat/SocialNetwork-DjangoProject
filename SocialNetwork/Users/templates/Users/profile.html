@@ -20,20 +20,21 @@
                     <h5 class="modal-title" id="exampleModalLabel"> Update your Profile</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-        <div class="modal-body">
+                <div class="modal-body">
                 <div>
                 <img src="img_avatar.png" alt="Avatar" class="avatar">
                 </div>
-                <form action="" method="POST" >
+                <form action= "{% url "editprofile" user.id %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{form.as_p}}
-                </form> 
-
-            </div>
+                    {% comment %} {{ form.as_p }} {% endcomment %}
+                    {{form.first_name}}
+                    {{form|crispy}}
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Update</button>
+                <button type="submit" class="btn btn-success" > Update profile </button>
             </div>
+                </form>
     </div>
   </div>
 </div>
