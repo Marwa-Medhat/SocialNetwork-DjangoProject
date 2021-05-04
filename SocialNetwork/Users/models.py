@@ -205,6 +205,6 @@ class Friend(models.Model):
 
 class FriendRequest(models.Model):
     Reciever = models.ForeignKey(
-        CustomUser, related_name="reciever", on_delete=models.CASCADE)
+        CustomUser, related_name="recieverRequest", on_delete=models.CASCADE)
     Sender = models.ForeignKey(
-        CustomUser, related_name="sender", on_delete=models.CASCADE)
+        CustomUser, related_name="senderRequest", on_delete=models.CASCADE)

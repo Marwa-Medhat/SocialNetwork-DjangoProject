@@ -35,19 +35,22 @@ LOGIN_URL = "/login"
 AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
-    'Users',
+    'channels',
+    # 'Users',
     'Chats',
     'Notifications',
     'Posts',
     'Groups',
     # 'accounts',
     'crispy_forms',
+    'Users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -80,6 +83,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'SocialNetwork.wsgi.application'
+ASGI_APPLICATION = "SocialNetwork.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+       
+    },
+}
 
 
 # Database

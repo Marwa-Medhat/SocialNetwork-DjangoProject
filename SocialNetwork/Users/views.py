@@ -1,15 +1,40 @@
-from Users.forms import RegistrationForm, AccountAuthenticationForm
+from Users.forms import RegistrationForm, AccountAuthenticationForm, profileForm
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
 from django.contrib import messages
+from .models import CustomUser , FriendRequest
+
 # from .models import UserDetails
+from .models import CustomUser
 
 
 # Create your views here.
 # profile page
 def index(request):
-    return render(request, 'Users/index.html')
+    users = CustomUser.objects.all();
+    # # sent_requests = FriendRequest.objects.get(Sender_id=request.user.id)
+    # print(sent_requests)
+    return render(request, 'Users/listUsers.html',
+    {
+        'users': users,
+        
+    } )
+
+def profile(request):
+    return render(request, 'Users/profile.html')
+def userprofile(request , id):
+    user = CustomUser.objects.get(pk=id);
+    return render(request, 'Users/userprofile.html' , 
+    {
+        'user':user
+    })
+def friendRequest(request , id):
+    recieverUser = CustomUser.objects.get(pk=id);
+    friend= FriendRequest(Reciever=recieverUser, Sender=request.user)
+    friend.save()
+    return redirect("listusers")
+    
 
 
 def registration_view(request):
@@ -64,3 +89,13 @@ def login_view(request):
 
     # print(form)
     return render(request, "Users/login.html", context)
+
+
+def editprofile(request, id):
+    user = CustomUser.objects.get(pk=id)
+    form = profileForm(request.POST or None, instance=user)
+    if form.is_valid():
+        form.save()
+        return redirect("login")
+    return render(request, "Users/edit.html", {"form": form, "user": user})
+    # return HttpResponseRedirect(request, "Users/edit.html", {"form": form, "user": user})

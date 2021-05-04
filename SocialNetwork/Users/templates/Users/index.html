@@ -16,8 +16,6 @@
 {% if request.user.is_authenticated %}
 <h3>welcome {{request.user.username}}| <a href="{% url 'logout'%}">Logout</a></h3>
 
-{% comment %} <h1>Hello from your profile</h1> {% endcomment %}
-
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary  ms-5" style="width: 200px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Update Profile
@@ -57,26 +55,26 @@
 <tbody>
       <tr>
         <td>first name</td>
-        <td></td>
+        <td>{{request.user.first_name}}</td>
     </tr>
 
     <tr>
         <td>last name</td>
-        <td>Medhat</td>
+        <td>{{request.user.last_name}}</td>
     </tr>
 
     <tr>
         <td>username</td>
-        <td>Marwa Medhat</td>
+        <td>{{request.user.username}}</td>
     </tr>
   
     <tr>
         <td>Email </td>
-        <td>Engineer</td>
+        <td>{{request.user.email}}</td>
     </tr>
     <tr>
         <td>gender</td>
-        <td>5</td>
+        <td>{{request.user.gender}}</td>
     </tr>
     <tr>
         <td>date of birth</td>
