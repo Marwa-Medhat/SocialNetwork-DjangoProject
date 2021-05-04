@@ -1,14 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
+from Groups.models import Group 
+from datetime import datetime  
+from django.utils import timezone   
+from django.urls import reverse
 from Users.models import CustomUser
-from Groups.models import Group
-# Create your models here.
-
-
 class Post(models.Model):
     user_id = models.ForeignKey(
         CustomUser, related_name="userPosts", on_delete=models.CASCADE)
     content = models.TextField()
-    creation_date_time = models.DateField(auto_now=True)
+    creation_date_time = models.DateTimeField(auto_now=True)
     Group_id = models.ForeignKey(
         Group, related_name="group", on_delete=models.CASCADE, blank=True, null=True)
     post_image = models.ImageField(
@@ -18,12 +19,12 @@ class Post(models.Model):
 
     def total_likes(self):
         return self.likes.count()
-
+    def get_absolute_url(self):
+        return reverse('details', kwargs={'id': self.id})
 
 class Comment(models.Model):
-    post_id = models.ForeignKey(
-        Post, related_name="post", on_delete=models.CASCADE)
-    content = models.TextField()
+    post_id= models.ForeignKey(Post, related_name="post", on_delete=models.CASCADE)
+    content = models.TextField(null=True,blank=True)
     creation_date_time = models.DateTimeField(auto_now=True)
 
 
