@@ -14,12 +14,8 @@ class PostsCreateForm(forms.ModelForm):
     class Meta:
         model = Post
         fields="__all__"
-        exclude = ['user_id']
-        widgets = {
+        exclude = ['user_id','likes']
         
-        'likes':forms.HiddenInput(),
-        
-         }
         
 class CommentsCreateForm(forms.ModelForm):
     content = forms.CharField(label ="", widget = forms.Textarea(
@@ -34,10 +30,12 @@ class CommentsCreateForm(forms.ModelForm):
     class Meta:
         model=Comment
         fields ="__all__"
+        exclude = ['user'] #b3t bdlha kima 
         widgets = {
         'post_id': forms.HiddenInput(),
         
-         }
+        }
+        # bi5fy el field men 8air ma ab3t kima 
       
     
 

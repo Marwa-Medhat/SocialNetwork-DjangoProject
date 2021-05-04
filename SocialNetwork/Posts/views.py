@@ -79,9 +79,11 @@ def details(request, id):
 def comment(request, id):
     post = Post.objects.get(id=id)
     data = {'post_id': post.id}
-    comment = CommentsCreateForm(request.POST or None, initial=data)
+    comment = CommentsCreateForm(request.POST or None,initial=data)
     if comment.is_valid():
-        comment.save()
+        comments = comment.save(commit=False)
+        comments.user_id= request.user.id
+        comments.save()
         return redirect("details", id=post.id)
     return HttpResponseRedirect(post.get_absolute_url())
 

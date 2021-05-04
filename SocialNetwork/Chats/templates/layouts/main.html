@@ -46,10 +46,22 @@
                 </div>
                               
         </div>
+         <div class="dropdown" >
+            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown"><i class="bi bi-person-plus text-white"></i> </a>
+                <div class="dropdown-menu dropdown-menu-right " >
+                       <a class="dropdown-item " href="#" >
+                         
+                        </a> 
+                      
+                </div>
+                              
+        </div>
  <div class="dropdown" >
             <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" ><i class="bi bi-person text-white   "></i> </a>
                 <div class="dropdown-menu dropdown-menu-right" >
-                     
+                       <a class="dropdown-item " href="{% url 'logout' %}" >
+                          <i class="bi bi-box-arrow-in-right ml-3">logout</i> 
+                        </a> 
                       
                 </div>
                               
@@ -77,11 +89,7 @@
 			  <li>
 				<a href="{%url 'listusers'%}" <i class="bi bi-people-fill"></i> add friends</a>
 			</li>
-      <li>
-      <a href="{% url 'logout' %}" >
-        <i class="bi bi-box-arrow-in-right ml-3">logout</i> 
-      </a> 
-    </li>
+      
             </ul>
 	      </div>
     	</nav>
