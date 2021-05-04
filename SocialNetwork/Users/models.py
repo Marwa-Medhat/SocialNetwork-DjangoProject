@@ -105,7 +105,7 @@
 
 
 from django.db import models
-
+import datetime
 # from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -154,7 +154,8 @@ class CustomUser(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     gender = models.CharField(
         choices=[('male', 'male'), ('female', 'female')], max_length=50)
-    # date_of_birth = models.DateField()
+    date_of_birth = models.DateField(
+        auto_now=False, auto_now_add=False, default=datetime.date.today())
     profile_avatar = models.ImageField(
         upload_to='media/avatars', max_length=50, default="default.png")
     date_joined = models.DateTimeField(
@@ -164,7 +165,6 @@ class CustomUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    # password                =
     REQUIRED_FIELDS = [
         'first_name', 'last_name', 'gender', 'username']
     USERNAME_FIELD = 'email'
