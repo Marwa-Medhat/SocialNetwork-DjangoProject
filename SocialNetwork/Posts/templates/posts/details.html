@@ -16,7 +16,7 @@
             </div>
       </div>
         <div class="card-header border-bottom">
-          <p class="card-text text-primary h5">{{request.user.username }}
+          <p class="card-text text-primary h5">{{post.user_id.username }}
 </p>
             <p class="card-text  text-muted "> {{post.creation_date_time}} </p>  
         </div>   
@@ -43,8 +43,9 @@
               <p></p>
                {% else %}
               {% for comment in post.post.all %}
-                 <div class="ml-4"><strong>{{comment.post_id}}-{{comment.creation_date_time}}</div></strong> 
-                 <div class="ml-4">{{comment.content}} </div> 
+                 <div class="ml-4 "><strong class="h4">{{post.user_id.username}}</strong>
+                 <p class="text-muted">{{comment.creation_date_time}}</p></div>
+                 <div class="ml-4 bg-light  rounded-pill w-50">{{comment.content}} </div> 
           
               {% endfor %}
              
