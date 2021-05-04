@@ -51,6 +51,7 @@ def login_view(request):
         form = AccountAuthenticationForm(request.POST)
         if form.is_valid():
             email = request.POST['email']
+            password = request.POST['password']
             user = authenticate(email=email, password=password)
 
             if user:
@@ -72,5 +73,5 @@ def editprofile(request, id):
     if form.is_valid():
         form.save()
         return redirect("login")
-    # return render(request, "Users/edit.html", {"form": form, "user": user})
-    return HttpResponseRedirect(request, "Users/edit.html", {"form": form, "user": user})
+    return render(request, "Users/edit.html", {"form": form, "user": user})
+    # return HttpResponseRedirect(request, "Users/edit.html", {"form": form, "user": user})
