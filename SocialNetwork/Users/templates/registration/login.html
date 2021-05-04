@@ -6,12 +6,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script> {% endcomment %}
 
 </head>
-<body class="col-md-4  offset-md-4 border border-primary-5 " style=" margin-top:50px; padding-top: 80px; width: 400px;" >  
+<body class="col-md-4  offset-md-4 border border-primary " style=" margin-top:50px; padding-top: 80px; width: 400px; height:400px; " >  
 
 <form  action= "{% url "login" %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-success btn-lg " style="margin-left:100px"  >login </button>
+    <button type="submit" class="btn btn-primary btn-lg " style="margin-left:100px"  >login </button>
 </form>
 </body>
 </html>

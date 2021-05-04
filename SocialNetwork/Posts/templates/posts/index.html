@@ -4,14 +4,14 @@
 {% load crispy_forms_tags %}
 {%block body%}
 <p class="h2"> welcome {{request.user.username }}</p>
-<div class="card w-50">
+<div class="card w-50 ml-4">
 <div class="card-body bg-light ">
 
- <div class="input-group ">
+   <div class="input-group ">
     <div class="form-outline ">
     <input type="search" class="form-control rounded-pill ml-5 "style="width:300px" data-bs-toggle="modal" data-bs-target="#exampleModal" placeholder="what's in your mind ? add post here"/>
- </div>
-</div>
+    </div>
+   </div>
           
 </div>
 </div>
@@ -83,7 +83,7 @@
                               
         </div>
          <div class="card-header border-bottom">
-           <p class="card-text text-primary h5">  {{request.user.username }}</p>
+           <p class="card-text text-primary h5">  {{post.user_id.username }}</p>
                  <p class="card-text  text-muted "> {{post.creation_date_time}}</p>  
      </div>   
           

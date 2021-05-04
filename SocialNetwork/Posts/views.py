@@ -9,8 +9,8 @@ from django.http import HttpResponseRedirect
 
 def index(request):
 
-    posts = Post.objects.order_by('creation_date_time')
-#    print(posts)
+    posts = Post.objects.order_by('-creation_date_time')
+    print(posts)
     form = PostsCreateForm()
     # print(form)
     return render(request, "posts/index.html",
@@ -21,16 +21,14 @@ def index(request):
 
 
 def create(request):
-
     # user = request.user
     # if not user.is_authenticated:
     #     return redirect('mustauth')
-    post = Post.objects.get(user_id=request.user.id)
-    data = {'user_id': post}
-    form = PostsCreateForm(request.POST or None, initial=data)
+    form = PostsCreateForm(request.POST or None)
     if form.is_valid():
-        form.instance.user_id = request.user.id
-        form.save()
+        forms = form.save(commit=False)
+        forms.user_id_id = request.user.id
+        forms.save()
         return redirect("index")
 
     return render(request, "posts/create.html", {
@@ -46,9 +44,10 @@ def destroy(request, id):
 
 def edit(request, id):
     post = Post.objects.get(id=id)
-    data = {'user_id': post.user_id, 'content': post.content}
-    form = PostsCreateForm(request.POST or None, initial=data, instance=post)
+    form = PostsCreateForm(request.POST or None, instance=post)
     if form.is_valid():
+        forms = form.save(commit=False)
+        forms.user_id_id = request.user.id
         form.save()
         return redirect("index")
 
