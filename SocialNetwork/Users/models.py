@@ -196,15 +196,15 @@ class CustomUser(AbstractBaseUser):
 #         upload_to='media/avatars', max_length=50, default="default.png")
 
 
-class Friend(models.Model):
-    user_id = models.ForeignKey(
-        CustomUser, related_name="user", on_delete=models.CASCADE)
-    friend_id = models.ForeignKey(
-        CustomUser, related_name="userfriend", on_delete=models.CASCADE)
+# class Friend(models.Model):
+#     user_id = models.ForeignKey(
+#         CustomUser, related_name="user", on_delete=models.CASCADE)
+#     friend_id = models.ForeignKey(
+#         CustomUser, related_name="userfriend", on_delete=models.CASCADE)
 
 
-class FriendRequest(models.Model):
-    Reciever = models.ForeignKey(
-        CustomUser, related_name="recieverRequest", on_delete=models.CASCADE)
-    Sender = models.ForeignKey(
-        CustomUser, related_name="senderRequest", on_delete=models.CASCADE)
+# class FriendRequest(models.Model):
+#     Reciever = models.ForeignKey(
+#         CustomUser, related_name="recieverRequest", on_delete=models.CASCADE)
+#     Sender = models.ForeignKey(
+#         CustomUser, related_name="senderRequest", on_delete=models.CASCADE)

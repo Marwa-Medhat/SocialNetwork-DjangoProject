@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Notifications',
     'Posts',
     'Groups',
+    'friends',
     # 'accounts',
     'crispy_forms',
     'Users.apps.UsersConfig',
