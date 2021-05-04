@@ -6,4 +6,6 @@ class Chat(models.Model):
     RecieverUser = models.ForeignKey(User,related_name="recieverUser", on_delete=models.CASCADE)
     content = models.TextField()
     date = models.DateTimeField( auto_now=True)
-    
+class rooms(models.Model):
+   room_member=models.ManyToManyField(User, related_name="members")
+   room_messages= models.ManyToManyField(Chat, related_name="messages")  
