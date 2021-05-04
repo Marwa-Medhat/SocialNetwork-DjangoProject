@@ -9,7 +9,7 @@ from django.contrib import messages
 # Create your views here.
 # profile page
 def index(request):
-    return render(request, 'Users/index.html')
+    return render(request, 'Users/profile.html')
 
 
 def registration_view(request):

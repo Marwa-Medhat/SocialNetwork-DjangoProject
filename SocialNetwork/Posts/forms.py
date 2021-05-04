@@ -15,7 +15,7 @@ class PostsCreateForm(forms.ModelForm):
         model = Post
         fields="__all__"
         widgets = {
-        # 'user_id': forms.HiddenInput(),
+        'user_id': forms.HiddenInput(),
         # 'likes':forms.HiddenInput(),
         
          }

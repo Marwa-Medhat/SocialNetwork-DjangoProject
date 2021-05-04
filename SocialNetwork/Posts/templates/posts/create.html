@@ -3,6 +3,7 @@
 {% if request.user.is_authenticated %}
 <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
   {%csrf_token%} {{request.user.username }}
+  
   {{form |crispy}}
 
   <button type="submit" class="btn btn-primary">Add a Post</button>
