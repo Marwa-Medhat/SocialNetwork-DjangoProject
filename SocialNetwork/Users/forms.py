@@ -39,7 +39,7 @@ class profileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('email', 'first_name', 'last_name', 'username')
-
+       
     def clean(self):
         super(profileForm, self).clean()
         return self.cleaned_data

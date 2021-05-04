@@ -1,12 +1,13 @@
-<html>
-  <head></head>
-  <body>
-    <form action= "{% url "editprofile" user.id %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+{% extends "layouts/main.html"%}
+ {% load crispy_forms_tags %}
+  {% block body%} 
+
+    <form action= "{% url 'editprofile' user.id %}" method="post" enctype="multipart/form-data">
+    
+         {% csrf_token %} 
+          {{form |crispy}}
         <button type="submit" class="btn btn-success" > Update profile </button>
     </form>
 
 
-  </body>
-</html>
+{% endblock %}
