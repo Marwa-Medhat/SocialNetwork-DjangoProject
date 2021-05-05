@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'Notifications',
     'Posts',
     'Groups',
-    'friends',
+    # 'friends',
     # 'accounts',
     'crispy_forms',
     'Users.apps.UsersConfig',
@@ -99,9 +99,9 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'socialnetwork',
+        'NAME': 'SocialNetwork',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '0175471031',
         'Host': 'localhost',
 
 
