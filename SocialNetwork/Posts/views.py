@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment
+from Groups.models import Group
 from .forms import PostsCreateForm, CommentsCreateForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
@@ -9,7 +10,8 @@ from django.http import HttpResponseRedirect
 
 def index(request):
 
-    posts = Post.objects.order_by('-creation_date_time')
+    posts = Post.objects.filter(Group_id__isnull=True)
+    posts = posts.order_by('-creation_date_time')
     print(posts)
     form = PostsCreateForm()
     # print(form)
@@ -24,13 +26,30 @@ def create(request):
     # user = request.user
     # if not user.is_authenticated:
     #     return redirect('mustauth')
+    global post
     form = PostsCreateForm(request.POST or None)
     if form.is_valid():
-        forms = form.save(commit=False)
-        forms.user_id_id = request.user.id
-        forms.save()
-        return redirect("index")
-
+        user_id = request.user
+        content = form.cleaned_data.get('content')
+        if form.cleaned_data.get('post_image') : 
+            postImg = form.cleaned_data.get('post_image')
+            post = Post(content=content , post_image=postImg , user_id=user_id  )
+        else : 
+            post = Post(content=content ,user_id=user_id  )
+        url = request.META.get('HTTP_REFERER')
+        url = url.split("/")
+        if len(url) == 5:
+            if url[3] == "groups":
+                groupId = url[4]
+                group = Group.objects.get(pk=groupId)
+                post.Group_id = group
+        post.save()
+        #forms = form.save(commit=False)
+        #forms.user_id_id = request.user.id
+        #forms.save()
+        #return redirect("index")
+        #return HttpResponseRedirect(request.path_info)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return render(request, "posts/create.html", {
         "form": form,
     })

@@ -14,7 +14,7 @@ class PostsCreateForm(forms.ModelForm):
     class Meta:
         model = Post
         fields="__all__"
-        exclude = ['user_id']
+        exclude = ['user_id', 'Group_id']
         widgets = {
         
         'likes':forms.HiddenInput(),
