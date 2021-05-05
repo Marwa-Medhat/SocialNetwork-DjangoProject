@@ -22,12 +22,19 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('details', kwargs={'id': self.id})
 
+    def __str__(self):
+        return self.content
+
+
+
 class Comment(models.Model):
     user = models.ForeignKey(
         CustomUser, related_name="userComments", on_delete=models.CASCADE,null=True,blank=True)
     post_id= models.ForeignKey(Post, related_name="post", on_delete=models.CASCADE)
     content = models.TextField(null=True,blank=True)
     creation_date_time = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.content
 
 
 # class Likes(models.Model):
