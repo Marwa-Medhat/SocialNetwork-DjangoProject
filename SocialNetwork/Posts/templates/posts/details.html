@@ -55,18 +55,18 @@
               <p></p>
                {% else %}
               {% for comment in post.post.all %}
-                 <div class="ml-4 "><strong class="h4"> <img src="{{post.user_id.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> {{comment.user.username}}</strong>
+                 <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> {{comment.user.username}}</strong>
                  <p class="text-muted">{{comment.creation_date_time}}</p></div>
-                  {% load profanity %}
+                  {% comment %} {% load profanity %} {% endcomment %}
                  <div class="ml-4 bg-light  rounded-pill w-50">
-                
+                 {% comment %} 
                   {{form.media}}
-                 {% with sentence=comment.content %} 
+                 {% with sentence=comment.content %} {% endcomment %}
 
-                    {{ sentence | censor }}
-                  {% endwith %}
-                {% comment %} {{form.media}}
-                 {{comment.content}} {% endcomment %}
+                    {% comment %} {{ sentence | censor }} {% endcomment %}
+                  {% comment %} {% endwith %} {% endcomment %}
+                {{form.media}}
+                 {{comment.content}}
                  </div> 
                  <hr>
           
@@ -89,7 +89,7 @@
             </form>  
           </div> 
       </div>       
-    </div>   
+       
   </div>
   
      

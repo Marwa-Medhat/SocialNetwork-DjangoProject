@@ -91,15 +91,8 @@
           
           <div class="card-body">   
           {% if post.post_image %}              
-       <img src="{{ post.post_image.url }}"  alt="connect" style="width: 75%; margin-right: 10px;" class="card-img-top"/> </br>{% endif %} </div>
-        </br><p class="card-text  mt-2 h6">
-        {% load profanity %}
-                 <div class="ml-4 bg-light  rounded-pill w-50">{% with sentence=post.content %}
-                    {{ sentence | censor }}
-                  {% endwith %}
-        
-        
-        <a href="{% url 'details' post.pk %}">More</a></p>
+        <img src="{{ post.post_image.url }}"  alt="connect" style="width: 75%; margin-right: 10px;" class="card-img-top"/> </br>{% endif %} </div>
+        </br><p class="card-text  mt-2 h6">{{post.content}} <a href="{% url 'details' post.pk %}">More</a></p>
 
        
 

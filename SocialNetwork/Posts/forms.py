@@ -17,6 +17,9 @@ class PostsCreateForm(forms.ModelForm):
         model = Post
         fields="__all__"
         exclude = ['user_id','likes']
+        widgets = {
+        'Group_id': forms.HiddenInput(),
+         }
        
         
 class CommentsCreateForm(forms.ModelForm):
