@@ -24,7 +24,7 @@ def create(request):
     # user = request.user
     # if not user.is_authenticated:
     #     return redirect('mustauth')
-    form = PostsCreateForm(request.POST or None)
+    form = PostsCreateForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         forms = form.save(commit=False)
         forms.user_id_id = request.user.id
@@ -44,7 +44,7 @@ def destroy(request, id):
 
 def edit(request, id):
     post = Post.objects.get(id=id)
-    form = PostsCreateForm(request.POST or None, instance=post)
+    form = PostsCreateForm(request.POST or None,request.FILES or None, instance=post)
     if form.is_valid():
         forms = form.save(commit=False)
         forms.user_id_id = request.user.id
