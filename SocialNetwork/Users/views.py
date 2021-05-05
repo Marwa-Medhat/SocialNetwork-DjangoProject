@@ -92,10 +92,10 @@ def login_view(request):
 
 
 def editprofile(request, id):
-    user = CustomUser.objects.get(pk=id)
+    user = CustomUser.objects.get(id=request.user.id)
     form = profileForm(request.POST or None, instance=user)
     if form.is_valid():
         form.save()
-        return redirect("login")
+        return redirect("profile")
     return render(request, "Users/edit.html", {"form": form, "user": user})
-    # return HttpResponseRedirect(request, "Users/edit.html", {"form": form, "user": user})
+
