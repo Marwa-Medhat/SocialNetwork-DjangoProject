@@ -22,7 +22,10 @@
       {% endif %}
         <div class="card-header border-bottom">
        <p class="card-text text-primary h5">  <img src="{{post.user_id.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
-          {{post.user_id.username }}</p>
+        <a href="{% url 'userprofile' post.user_id_id %}" > {{post.user_id.first_name }}   {{post.user_id.last_name }}</a>
+          
+          
+          </p>
             <p class="card-text  text-muted "> {{post.creation_date_time}} </p>  
         </div>   
            
@@ -55,7 +58,10 @@
               <p></p>
                {% else %}
               {% for comment in post.post.all %}
-                 <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> {{comment.user.username}}</strong>
+                 <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
+                 
+                 
+                   <a href="{% url 'userprofile' comment.user_id %}" > {{comment.user.first_name }}   {{comment.user.last_name }}</a></strong>
                  <p class="text-muted">{{comment.creation_date_time}}</p>
                  </div>
                   {% load profanity %}
