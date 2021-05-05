@@ -50,10 +50,11 @@
                  <div class="ml-4 "><strong class="h4">{{comment.user.username}}</strong>
                  <p class="text-muted">{{comment.creation_date_time}}</p></div>
                   {% load profanity %}
-                 <div class="ml-4 bg-light  rounded-pill w-50">{% with sentence=comment.content %}
+                 <div class="ml-4 bg-light  rounded-pill w-50">
+                 {% with sentence=comment.content %}
                     {{ sentence | censor }}
                   {% endwith %}
-                 
+                
                  </div> 
                  <hr>
           
