@@ -100,7 +100,8 @@ def editprofile(request, id):
     # user = CustomUser.objects.get(pk=id)
     # form = profileForm(request.POST or None, instance=user)
     user = CustomUser.objects.get(id=request.user.id)
-    form = profileForm(request.POST or None, instance=user)
+    form = profileForm(request.POST or None,
+                       request.FILES or None, instance=user)
     confirm = False
     if form.is_valid():
         form.save()
