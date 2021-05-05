@@ -88,7 +88,7 @@ ASGI_APPLICATION = "SocialNetwork.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-       
+
     },
 }
 
@@ -101,9 +101,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Socialnetwork',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'Meroronasasa.41211',
         'Host': 'localhost',
-
 
     }
 }

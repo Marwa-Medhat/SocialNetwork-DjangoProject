@@ -1,13 +1,22 @@
-{% extends "layouts/main.html"%}
- {% load crispy_forms_tags %}
-  {% block body%} 
+{% extends "layouts/main.html"%} {% load crispy_forms_tags %} {% block body%}
 
-    <form action= "{% url 'editprofile' user.id %}" method="post" enctype="multipart/form-data">
-    
-         {% csrf_token %} 
-          {{form |crispy}}
-        <button type="submit" class="btn btn-success" > Update profile </button>
-    </form>
-
-
-{% endblock %}
+<form
+  action="{% url 'editprofile' user.id %}"
+  method="post"
+  enctype="multipart/form-data"
+  
+>
+  {% csrf_token %} 
+  {{form.media}}
+  {{form |crispy}}
+  <button type="submit" class="btn btn-success">Update profile</button>
+</form>
+{% comment %}
+<a href="{% url 'profile' %}" class="btn btn-success"> back to your profile </a>
+{% endcomment %} {% comment %}
+<h2>{{confirm}}</h2>
+{% endcomment %} {% if confirm %}
+<p1>{{form.profile_avatar}}</p>
+<p1>{{request.user.profile_avatar.url}}</p>
+<h1 class="alert alert-success">Updated Successfully</h1>
+{% endif %} {% endblock %}
