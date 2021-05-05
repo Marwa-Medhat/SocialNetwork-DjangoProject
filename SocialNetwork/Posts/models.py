@@ -13,7 +13,7 @@ class Post(models.Model):
     Group_id = models.ForeignKey(
         Group, related_name="group", on_delete=models.CASCADE, blank=True, null=True)
     post_image = models.ImageField(
-        upload_to='images/', max_length=50, blank=True, null=True)
+        upload_to='media/', max_length=50, blank=True, null=True)
     likes = models.ManyToManyField(
         CustomUser, related_name='post_likes', null=True, blank=True)
 

@@ -57,7 +57,7 @@
                               
         </div>
  <div class="dropdown" >
-            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" ><i class="bi bi-person text-white   "></i> </a>
+            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" ><img src="{{request.user.profile_avatar.url}}" width="30px" height="30px;" class="p-10 rounded-circle"> </a>
                 <div class="dropdown-menu dropdown-menu-right" >
                        <a class="dropdown-item " href="{% url 'logout' %}" >
                           <i class="bi bi-box-arrow-in-right ml-3">logout</i> 
@@ -77,6 +77,10 @@
 				<div class="p-4 pt-5 collapse multi-collapse" id="multiCollapseExample2">
 		  	
 	        <ul class="list-unstyled components mb-5">
+           <li class="active">
+          <img src="{{request.user.profile_avatar.url}}" width="200px" height="200px;" class="p-10 rounded-circle">
+          <h2>{{request.user.username}}<h2>
+           </li>
 	          <li class="active">
 	             <a href="{% url 'profile' %}" ><i class="bi bi-person"></i>My Profile</a>
 	           
