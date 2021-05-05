@@ -157,7 +157,7 @@ class CustomUser(AbstractBaseUser):
     date_of_birth = models.DateField(
         auto_now=False, auto_now_add=False, default=datetime.date.today())
     profile_avatar = models.ImageField(
-        upload_to='media/avatars', max_length=50, default="default.png")
+        upload_to='media/', max_length=50, default="default.png")
     date_joined = models.DateTimeField(
         verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
@@ -205,6 +205,6 @@ class Friend(models.Model):
 
 class FriendRequest(models.Model):
     Reciever = models.ForeignKey(
-        CustomUser, related_name="reciever", on_delete=models.CASCADE)
+        CustomUser, related_name="recieverRequest", on_delete=models.CASCADE)
     Sender = models.ForeignKey(
-        CustomUser, related_name="sender", on_delete=models.CASCADE)
+        CustomUser, related_name="senderRequest", on_delete=models.CASCADE)

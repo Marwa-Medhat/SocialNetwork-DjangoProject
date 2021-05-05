@@ -35,6 +35,7 @@ LOGIN_URL = "/login"
 AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
+    'channels',
     # 'Users',
     'Chats',
     'Notifications',
@@ -82,6 +83,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'SocialNetwork.wsgi.application'
+ASGI_APPLICATION = "SocialNetwork.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+
+    },
+}
 
 
 # Database
@@ -94,7 +102,6 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'Meroronasasa.41211',
         'Host': 'localhost',
-
 
     }
 }
