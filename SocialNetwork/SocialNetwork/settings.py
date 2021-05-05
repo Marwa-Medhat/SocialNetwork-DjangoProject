@@ -35,6 +35,7 @@ LOGIN_URL = "/login"
 AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
+    'profanity',
     'channels',
     # 'Users',
     'Chats',

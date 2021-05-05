@@ -107,6 +107,6 @@ def editprofile(request, id):
         form.save()
         confirm = True
         print(form)
-        # return redirect("profile")
+        return redirect("profile")
     return render(request, "Users/edit.html", {"form": form, "user": user, "confirm": confirm})
     # return HttpResponseRedirect(request, "Users/edit.html", {"form": form, "user": user})
