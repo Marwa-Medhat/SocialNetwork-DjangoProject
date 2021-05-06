@@ -5,9 +5,14 @@ from .models import Post,Comment
 
 class PostAdmin(admin.ModelAdmin):
     form=PostsCreateForm
-    def save_model(self, request, instance, form, change):
-        form.instance.user_id = self.request.user.id
-        super(Post, self).save_model(request, instance, form, change)
+
+    def form_valid(self, form):
+        form.instance.post = self.object
+        form.instance.user_id_id = self.request.user.id
+        return super().form_valid(form)
+
+
+
     
 class AdminComment(admin.ModelAdmin):
    

@@ -79,7 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-           
+
         },
     },
 ]
@@ -100,7 +100,7 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'SocialNetwork',
+        'NAME': 'socialnetwork',
         'USER': 'root',
         'PASSWORD': 'root',
         'Host': 'localhost',

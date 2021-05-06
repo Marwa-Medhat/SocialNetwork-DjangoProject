@@ -22,7 +22,10 @@
       {% endif %}
         <div class="card-header border-bottom">
        <p class="card-text text-primary h5">  <img src="{{post.user_id.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
-          {{post.user_id.username }}</p>
+        <a href="{% url 'userprofile' post.user_id_id %}" > {{post.user_id.first_name }}   {{post.user_id.last_name }}</a>
+          
+          
+          </p>
             <p class="card-text  text-muted "> {{post.creation_date_time}} </p>  
         </div>   
            
@@ -55,9 +58,12 @@
               <p></p>
                {% else %}
               {% for comment in post.post.all %}
-                 <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> {{comment.user.username}}</strong>
-                 {% if comment.user.id == request.user.id %}
-                 <p class="text-muted">{{comment.creation_date_time}}</p></div> 
+                 <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
+                 
+                 
+                   <a href="{% url 'userprofile' comment.user_id %}" > {{comment.user.first_name }}   {{comment.user.last_name }}</a></strong>
+                 {% if comment.user.id == request.user.id %}                
+                 <p class="text-muted">{{comment.creation_date_time}}</p>
                  <form action="{% url 'delete_comment'  %}" method="POST">
                                   {% csrf_token %}
                    <input type='hidden' value='{{post.id}}' name='id'>
@@ -67,13 +73,14 @@
                                      </button>
                             </form>
                 {% endif%}
+                 </div>
                   {% comment %} {% load profanity %} {% endcomment %}
                  <div class="ml-4 bg-light  rounded-pill w-50">
                  {% comment %} 
                   {{form.media}}
                  {% with sentence=comment.content %} {% endcomment %}
 
-                    {% comment %} {{ sentence | censor }} {% endcomment %}
+                    {% comment %}  {{form.media}} {{ sentence | censor }} {% endcomment %}
                   {% comment %} {% endwith %} {% endcomment %}
                 {{form.media}}
                  {{comment.content}}  

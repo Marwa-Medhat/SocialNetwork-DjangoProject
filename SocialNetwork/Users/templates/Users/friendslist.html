@@ -1,0 +1,19 @@
+{% extends "layouts/main.html"%} {%block body%} {% load static %}
+<div class="card">
+  <div class="card-header">Friends</div>
+
+  <div class="card-body">
+    <li class="list-group-item" style="position: relative">
+      {%for friend in friends%}
+      <img
+        src="{{friend.profile_avatar.url}}"
+        style="width: 40px; height: 40px"
+      />
+      <a href="{% url 'userprofile' friend.id %}"
+        >{{friend.first_name }} {{friend.last_name }}</a
+      >
+    </li>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
