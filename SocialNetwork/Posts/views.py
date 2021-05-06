@@ -5,9 +5,10 @@ from .forms import PostsCreateForm, CommentsCreateForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from Notifications.models import Notification
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-
+@login_required() 
 def index(request):
 
     posts = Post.objects.filter(Group_id__isnull=True)
@@ -23,6 +24,7 @@ def index(request):
                   })
 
 
+@login_required() 
 def create(request):
     # user = request.user
     # if not user.is_authenticated:
@@ -56,12 +58,14 @@ def create(request):
     })
 
 
+@login_required() 
 def destroy(request, id):
     post = Post.objects.get(id=id)
     post.delete()
     return redirect("index")
 
 
+@login_required() 
 def edit(request, id):
     post = Post.objects.get(id=id)
     form = PostsCreateForm(request.POST or None,
@@ -78,6 +82,7 @@ def edit(request, id):
     })
 
 
+@login_required() 
 def details(request, id):
     post = Post.objects.get(id=id)
     data = {'post_id': post.id}
@@ -100,6 +105,7 @@ def details(request, id):
     })
 
 
+@login_required() 
 def comment(request, id):
     post = Post.objects.get(id=id)
     data = {'post_id': post.id}
@@ -116,7 +122,8 @@ def comment(request, id):
 
         return redirect("details", id=post.id)
     return HttpResponseRedirect(post.get_absolute_url())
-  
+
+@login_required()   
 def delete_comment(request):
     post = request.POST.get('id')
     comment = get_object_or_404(Comment, id=request.POST.get('comment_id'))
@@ -149,5 +156,6 @@ def like_post(request):
     return HttpResponseRedirect(post.get_absolute_url())
 
 
+@login_required() 
 def must_authenticate_view(request):
     return render(request, 'Posts/must_auth.html', {})
