@@ -99,13 +99,13 @@ class RelationshipManager(models.Manager):
 
 
 class Friend(models.Model):
-    # user_id = models.ForeignKey(
-    #     CustomUser, related_name="user", on_delete=models.CASCADE)
-    # friend_id = models.ForeignKey(
-    #     CustomUser, related_name="userfriend", on_delete=models.CASCADE)
+    user1 = models.ForeignKey(
+        CustomUser, related_name="user", on_delete=models.CASCADE, blank=True, null=True)
+    user2 = models.ForeignKey(
+        CustomUser, related_name="userfriend", on_delete=models.CASCADE, blank=True, null=True)
 
-    friends = models.ManyToManyField(
-        CustomUser, blank=True, related_name='friends')
+    # friends = models.ManyToManyField(
+    #     CustomUser, blank=True, related_name='friends')
 
     def __str__(self):
         return f"{self. friends} friends"
