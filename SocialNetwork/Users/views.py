@@ -14,7 +14,6 @@ from .models import CustomUser
 # profile page
 def index(request):
     users = CustomUser.objects.all()
-    
 
     # # sent_requests = FriendRequest.objects.get(Sender_id=request.user.id)
     # print(sent_requests)
@@ -25,7 +24,12 @@ def index(request):
 
 
 def profile(request):
-    return render(request, 'Users/profile.html')
+    posts = Post.objects.order_by('-creation_date_time')
+    print(posts)
+    return render(request, 'Users/profile.html',
+                  {
+                      "posts": posts,
+                  })
 
 
 def userprofile(request, id):
@@ -34,7 +38,7 @@ def userprofile(request, id):
     return render(request, 'Users/userprofile.html',
                   {
                       'user': user,
-                        "posts": posts,
+                      "posts": posts,
                   })
 
 
