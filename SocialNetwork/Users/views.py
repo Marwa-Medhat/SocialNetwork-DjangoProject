@@ -1,9 +1,10 @@
 from Users.forms import RegistrationForm, AccountAuthenticationForm, profileForm
+from Posts.models import Post, Comment
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
 from django.contrib import messages
-from .models import CustomUser , FriendRequest
+from .models import CustomUser, FriendRequest
 
 # from .models import UserDetails
 from .models import CustomUser
@@ -12,29 +13,36 @@ from .models import CustomUser
 # Create your views here.
 # profile page
 def index(request):
-    users = CustomUser.objects.all();
+    users = CustomUser.objects.all()
+    
+
     # # sent_requests = FriendRequest.objects.get(Sender_id=request.user.id)
     # print(sent_requests)
     return render(request, 'Users/listUsers.html',
-    {
-        'users': users,
-        
-    } )
+                  {
+                      'users': users,
+                  })
+
 
 def profile(request):
     return render(request, 'Users/profile.html')
-def userprofile(request , id):
-    user = CustomUser.objects.get(pk=id);
-    return render(request, 'Users/userprofile.html' , 
-    {
-        'user':user
-    })
-def friendRequest(request , id):
-    recieverUser = CustomUser.objects.get(pk=id);
-    friend= FriendRequest(Reciever=recieverUser, Sender=request.user)
+
+
+def userprofile(request, id):
+    user = CustomUser.objects.get(pk=id)
+    posts = Post.objects.all()
+    return render(request, 'Users/userprofile.html',
+                  {
+                      'user': user,
+                        "posts": posts,
+                  })
+
+
+def friendRequest(request, id):
+    recieverUser = CustomUser.objects.get(pk=id)
+    friend = FriendRequest(Reciever=recieverUser, Sender=request.user)
     friend.save()
     return redirect("listusers")
-    
 
 
 def registration_view(request):
@@ -92,10 +100,17 @@ def login_view(request):
 
 
 def editprofile(request, id):
-    user = CustomUser.objects.get(pk=id)
-    form = profileForm(request.POST or None, instance=user)
+    # def editprofile(request):
+    # user = CustomUser.objects.get(pk=id)
+    # form = profileForm(request.POST or None, instance=user)
+    user = CustomUser.objects.get(id=request.user.id)
+    form = profileForm(request.POST or None,
+                       request.FILES or None, instance=user)
+    confirm = False
     if form.is_valid():
         form.save()
-        return redirect("login")
-    return render(request, "Users/edit.html", {"form": form, "user": user})
+        confirm = True
+        print(form)
+        return redirect("profile")
+    return render(request, "Users/edit.html", {"form": form, "user": user, "confirm": confirm})
     # return HttpResponseRedirect(request, "Users/edit.html", {"form": form, "user": user})

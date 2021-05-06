@@ -3,7 +3,11 @@
 <h2>Post</H2>
 <div class=" mt-3 left">
   <div class="card mb-4 ">
-    <div class="card-body  ">
+  
+    <div class="card-header  ">
+    
+     {% if request.user == post.user_id %}
+    
       <div class="dropdown float-right">
            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <i class="bi bi-three-dots  hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i> </a>
             <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
@@ -15,15 +19,25 @@
               </a> 
             </div>
       </div>
+      {% endif %}
         <div class="card-header border-bottom">
-          <p class="card-text text-primary h5">{{post.user_id.username }}
-</p>
+       <p class="card-text text-primary h5">  <img src="{{post.user_id.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
+        <a href="{% url 'userprofile' post.user_id_id %}" > {{post.user_id.first_name }}   {{post.user_id.last_name }}</a>
+          
+          
+          </p>
             <p class="card-text  text-muted "> {{post.creation_date_time}} </p>  
         </div>   
-        <div > 
+           
               {% if post.post_image %}
-                  <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; float: left; margin-right: 10px;" /> {% endif %}
-                  </br><p class="card-text  mt-2 h6">{{post.content}}</p>
+                  <div class="card-body">   
+                     
+        <img src="{{ post.post_image.url }}"  alt="connect" style="width: 50%; margin-right: 10px;" class="card-img-top"/> </br>{% endif %} </div>
+                  </br>
+            
+        <div class="card-body"> 
+                
+                   <p class="card-text  mt-2 h6">{{post.content}}</p>
                   <hr>
                   <form action="{% url 'like_post' %}"  method="POST">
                     {%csrf_token%}
@@ -34,23 +48,40 @@
                           <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm"> <i class="bi bi-hand-thumbs-up"></i>Like </button>
                       {% endif %}
                       </form>
-        </div>  
-         <p style="color:grey"> {{total_likes}} Like </p>            
+                         <p style="color:grey"> {{total_likes}} Like </p>            
          <hr> 
-          
-          <div class="card-body ">         
+        </div>  
+ 
+          <div class="card-body ">     
+              
             {% if not post.post.all %}
               <p></p>
                {% else %}
               {% for comment in post.post.all %}
-                 <div class="ml-4 "><strong class="h4">{{post.user_id.username}}</strong>
-                 <p class="text-muted">{{comment.creation_date_time}}</p></div>
-                 <div class="ml-4 bg-light  rounded-pill w-50">{{comment.content}} </div> 
+                 <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
+                 
+                 
+                   <a href="{% url 'userprofile' comment.user_id %}" > {{comment.user.first_name }}   {{comment.user.last_name }}</a></strong>
+                 <p class="text-muted">{{comment.creation_date_time}}</p>
+                 </div>
+                  {% load profanity %}
+                 <div class="ml-4 bg-light  rounded-pill w-50">
+                
+                  {{form.media}}
+                 {% with sentence=comment.content %} 
+
+                    {{ sentence | censor }}
+                  {% endwith %}
+                {% comment %} {{form.media}}
+                 {{comment.content}} {% endcomment %}
+                 </div> 
+                 <hr>
           
               {% endfor %}
              
             {% endif %}
            
+          
             <form action="{% url 'comment' post.id %}" method="post">
               {% load crispy_forms_tags %}
               {%csrf_token%}
@@ -58,16 +89,16 @@
                   <div class="card-body" >
            
                    {{ comment|crispy}}
+                   
                    <button type="submit" class="btn btn-primary rounded-pill float-right" value="{{post.id}}">Add a comment</button>
                   </div>  
                
             </form>  
-          </div> 
+     
       </div>       
     </div>   
   </div>
   
-     
  
 
  <a class="btn btn-warning ml-5 mb-5" href="{% url 'index' %}">Back</a>

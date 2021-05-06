@@ -18,7 +18,8 @@ def index(request):
     return render(request, "posts/index.html",
                   {
                       "posts": posts,
-                      "form": form
+                      "form": form,
+                   
                   })
 
 
@@ -63,7 +64,7 @@ def destroy(request, id):
 
 def edit(request, id):
     post = Post.objects.get(id=id)
-    form = PostsCreateForm(request.POST or None, instance=post)
+    form = PostsCreateForm(request.POST or None,request.FILES or None, instance=post)
     if form.is_valid():
         forms = form.save(commit=False)
         forms.user_id_id = request.user.id
@@ -75,7 +76,6 @@ def edit(request, id):
         "post": post
     })
 
-
 def details(request, id):
     post = Post.objects.get(id=id)
     data = {'post_id': post.id}
@@ -84,23 +84,24 @@ def details(request, id):
     is_liked = False
     if post.likes.filter(id=request.user.id).exists():
         is_liked = True
-
+ 
     return render(request, "posts/details.html", {
         "form": form,
         "post": post,
         "comment": comment,
         'is_liked': is_liked,
         'total_likes': post.total_likes(),
-
+ 
     })
-
 
 def comment(request, id):
     post = Post.objects.get(id=id)
     data = {'post_id': post.id}
     comment = CommentsCreateForm(request.POST or None, initial=data)
     if comment.is_valid():
-        comment.save()
+        comments = comment.save(commit=False)
+        comments.user_id= request.user.id
+        comments.save()
         return redirect("details", id=post.id)
     return HttpResponseRedirect(post.get_absolute_url())
 

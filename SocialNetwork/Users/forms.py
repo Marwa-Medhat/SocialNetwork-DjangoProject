@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from Users.models import CustomUser
+import datetime
 
 
 class RegistrationForm(UserCreationForm):
@@ -9,14 +10,15 @@ class RegistrationForm(UserCreationForm):
         max_length=60, help_text='Required. Add a valid email address.')
     first_name = forms.CharField(max_length=40)
     last_name = forms.CharField(max_length=40)
-    # gender = forms.CharField(
-    #     choices=[('male', 'male'), ('female', 'female')], max_length=50)
+    gender = forms.ChoiceField(
+        choices=[('male', 'male'), ('female', 'female')])
+    date_of_birth = forms.DateField(initial=datetime.date.today)
 
     class Meta:
         model = CustomUser
-        # ' gender'
         fields = ('username', 'first_name', 'last_name',
-                  'email', 'password1', 'password2', )
+                  'email', 'password1', 'password2', 'gender', 'date_of_birth')
+        #
 
 
 class AccountAuthenticationForm(forms.ModelForm):
@@ -38,8 +40,9 @@ class AccountAuthenticationForm(forms.ModelForm):
 class profileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name', 'username')
+        fields = ('email', 'first_name', 'last_name',
+                  'username', 'profile_avatar')
 
-    def clean(self):
-        super(profileForm, self).clean()
-        return self.cleaned_data
+    # def clean(self):
+    #     super(profileForm, self).clean()
+    #     return self.cleaned_data

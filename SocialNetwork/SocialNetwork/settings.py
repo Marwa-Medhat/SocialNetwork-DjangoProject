@@ -35,6 +35,7 @@ LOGIN_URL = "/login"
 AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
+    'profanity',
     'channels',
     # 'Users',
     'Chats',
@@ -78,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+           
         },
     },
 ]
@@ -87,7 +89,7 @@ ASGI_APPLICATION = "SocialNetwork.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-       
+
     },
 }
 
