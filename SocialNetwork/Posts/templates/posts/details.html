@@ -57,6 +57,7 @@
               
             {% if not post.post.all %}
               <p></p>
+              
                {% else %}
               {% for comment in post.post.all %}
                  <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
@@ -75,14 +76,13 @@
                             </form>
                 {% endif%}
                  </div>
-                  {% load profanity %}
+                 
                  <div class="ml-4 bg-light  rounded-pill w-50">
                  
                   {{form.media}}
-                 {% with sentence=comment.content %} 
+                 {{comment.content }}
+                 
 
-                     {{form.media}} {{ sentence | censor }}
-                  {% endwith %}
                
                  </div> 
                  <hr>
@@ -92,6 +92,8 @@
             {% endif %}
            
           </div>
+
+
             <form action="{% url 'comment' post.id %}" method="post">
               {% load crispy_forms_tags %}
               {%csrf_token%}
@@ -99,6 +101,7 @@
                   <div class="card-body" >
            
                    {{ comment|crispy}}
+                   
                    
                    <button type="submit" class="btn btn-primary rounded-pill float-right" value="{{post.id}}" id="comment">Add a comment</button>
                   </div>  

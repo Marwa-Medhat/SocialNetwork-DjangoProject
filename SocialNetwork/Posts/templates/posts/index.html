@@ -80,10 +80,9 @@
                        {% load profanity %}
 
                   {{form.media}}
-                   {% with sentence=post.content %} 
+                   {{post.content }}
 
-                     {{form.media}} {{ sentence | censor }}
-                  {% endwith %}
+                     {{form.media}} 
         
         <a href="{% url 'details' post.pk %}">More</a></p>
 
