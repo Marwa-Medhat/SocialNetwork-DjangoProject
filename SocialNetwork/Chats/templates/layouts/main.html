@@ -79,7 +79,13 @@
 	        <ul class="list-unstyled components mb-5">
            <li class="active">
           <img src="{{request.user.profile_avatar.url}}" width="200px" height="200px;" class="p-10 rounded-circle">
-          <h2>{{request.user.first_name}} {{request.user.last_name}}<h2>
+          <h2>
+          
+          <a href="{% url 'userprofile' user.id %}" >
+          
+          {{request.user.first_name}} {{request.user.last_name}}
+        </a>
+          <h2>
            </li>
 	          <li class="active">
 	             <a href="{% url 'profile' %}" ><i class="bi bi-person"></i>My Profile</a>
