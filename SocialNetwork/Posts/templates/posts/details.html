@@ -63,18 +63,27 @@
                  
                  
                    <a href="{% url 'userprofile' comment.user_id %}" > {{comment.user.first_name }}   {{comment.user.last_name }}</a></strong>
+                 {% if comment.user.id == request.user.id %}                
                  <p class="text-muted">{{comment.creation_date_time}}</p>
+                 <form action="{% url 'delete_comment'  %}" method="POST">
+                                  {% csrf_token %}
+                   <input type='hidden' value='{{post.id}}' name='id'>
+                   <input type="hidden" name="comment_id" value="{{comment.id}}" />
+                            <button type="submit" class="border-0 float-right">
+                                       <i class="bi bi-trash text-danger"></i>
+                                     </button>
+                            </form>
+                {% endif%}
                  </div>
                   {% load profanity %}
                  <div class="ml-4 bg-light  rounded-pill w-50">
-                
+                 
                   {{form.media}}
                  {% with sentence=comment.content %} 
 
-                    {{ sentence | censor }}
+                     {{form.media}} {{ sentence | censor }}
                   {% endwith %}
-                {% comment %} {{form.media}}
-                 {{comment.content}} {% endcomment %}
+               
                  </div> 
                  <hr>
           
@@ -82,7 +91,7 @@
              
             {% endif %}
            
-          
+          </div>
             <form action="{% url 'comment' post.id %}" method="post">
               {% load crispy_forms_tags %}
               {%csrf_token%}
@@ -97,7 +106,7 @@
             </form>  
      
       </div>       
-    </div>   
+       
   </div>
   
   {{post.user_id.username|json_script:"postusername"}}

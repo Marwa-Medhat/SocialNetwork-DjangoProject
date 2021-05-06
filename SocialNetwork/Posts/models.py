@@ -35,8 +35,7 @@ class Comment(models.Model):
     creation_date_time = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.content
-
-
+    
 # class Likes(models.Model):
 #     post_id = models.ForeignKey(
 #         Post, related_name="Likedpost", on_delete=models.CASCADE)

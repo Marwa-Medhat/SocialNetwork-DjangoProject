@@ -8,10 +8,12 @@ from .models import CustomUser, FriendRequest
 from django.http import HttpResponse, HttpResponseNotFound
 # from .models import UserDetails
 from .models import CustomUser, Friend
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 # Create your views here.
 # profile page
+# @login_required()
 def index(request):
     users = CustomUser.objects.all()
 
@@ -22,7 +24,7 @@ def index(request):
                       'users': users,
                   })
 
-
+# @login_required()
 def profile(request):
     posts = Post.objects.order_by('-creation_date_time')
     print(posts)
@@ -33,12 +35,22 @@ def profile(request):
 
 
 def userprofile(request, id):
-    user = CustomUser.objects.get(pk=id)
+    user = CustomUser.objects.get(pk=id) #al user lma bdos 3la click
+    user1 = CustomUser.objects.get(pk=request.user.id)
+    print(user1) ##al user 2li da5l
+    findfriend = []
+    friends = Friend.objects.all()
+    for friend in friends:
+        if request.user.username == friend.user1.username: # lw al user 2li da5l howa howa al sender
+            print(friend.user2)
+            findfriend.append(friend.user2) #yb2a dol as7abo 
+
     posts = Post.objects.all()
     return render(request, 'Users/userprofile.html',
                   {
                       'user': user,
                       "posts": posts,
+                      "friends":findfriend,
                   })
 
 

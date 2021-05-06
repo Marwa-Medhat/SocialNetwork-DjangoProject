@@ -44,23 +44,22 @@
 </head>
 
 <form class="form-signin" method="post">{% csrf_token %}
-  <div class="d-flex flex-column pb-3">
-    <img class="img-fluid mx-auto d-block" src="https://thumbs.dreamstime.com/z/businessman-icon-image-male-avatar-profile-vector-glasses-beard-hairstyle-179728610.jpg" alt="Codignwithmitch logo image" width="72" height="72">
+  <div class="d-flex flex-column pb-1">
   </div>
-  <h1 class="h3 mb-3 font-weight-normal">Register an account</h1>
-  <input type="text" name="first_name" id="first_name" class="form-control" placeholder="first_name" required>
-  <input type="text" name="last_name" id="last_name" class="form-control" placeholder="last_name" required>
-  <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
-  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" >
-  <label for="psw_repeat"><b>Gender </b></label><br/>  
+  <h1 class="h3 mb-3 font-weight-normal"> <strong>Register an account</strong></h1>
+  <strong>First Name:</strong><input type="text" name="first_name" id="first_name" class="form-control" placeholder="first_name" required>
+  <strong>Last Name:</strong><input type="text" name="last_name" id="last_name" class="form-control" placeholder="last_name" required>
+  <strong>User Name:</strong><input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
+  <strong>Email:</strong><input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" >
+  <label for="psw_repeat"><b>Gender :</b></label><br/>  
   <input type="radio" id="male" name="gender" value="male">
   <label for="male">Male</label><br>
   <input type="radio" id="female" name="gender" value="female">
   <label for="female">Female</label><br>
   <label for="date_of_birth"><b>Birthday:<b></label><br/>
-  <input type="date" id="date_of_birth" name="date_of_birth" >
-  <input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
-  <input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
+  <input type="date" id="date_of_birth" name="date_of_birth" ><br/>
+  <strong>Password:</strong><input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
+  <strong>Confirm Password:</strong><input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
 
   {% for field in registration_form %}
       <p>

@@ -34,17 +34,16 @@
   }
 </style>
 <head>
-
+{% comment %} <div  class="container" style="border-style: solid; border-width: 20px 5px;">  {% endcomment %}
 <form class="form-signin" method="post">{% csrf_token %}
-  <div class="d-flex flex-column pb-3">
-    <img class="img-fluid mx-auto d-block" src="" alt="logo image" width="72" height="72">
+  <div class="d-flex flex-column p-3 m-3">
   </div>
   
-  <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+  <h1 class="h3 mb-3 font-weight-bold"><strong>Login</strong></h1>
 
-  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+  <strong>Email</strong><input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
   
-  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <strong>password</strong><input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
   {% for field in login_form %}
       <p>
@@ -60,10 +59,6 @@
       
   {% endif %}
 
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+  <button class="btn btn-lg btn-primary btn-block m-6" type="submit">Log in</button>
 
 </form>
-
-<div class="d-flex flex-column">
-  <a class="m-auto" href="{% url 'password_reset' %}">Reset password</a>
-

@@ -105,8 +105,10 @@ class CommentsAdminCreateForm(forms.ModelForm):
     class Meta:
         model=Comment
         fields ="__all__"
+        
+        # exclude = ['user']
         widgets = {
-           'user' :forms.HiddenInput(),
+        #    'user' :forms.HiddenInput(),
         
          }
       
