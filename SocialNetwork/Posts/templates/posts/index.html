@@ -26,9 +26,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                <div class="modal-body">
-  
+    {% load profanity %}
                 <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
+                  {{form.media}}
+                   {% with sentence=post.content %} 
+
+                     {{form.media}} {{ sentence | censor }}
+                  {% endwith %}
+                   
                     {{form|crispy}}
                 
 

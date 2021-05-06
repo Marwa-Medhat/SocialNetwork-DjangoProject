@@ -74,16 +74,15 @@
                             </form>
                 {% endif%}
                  </div>
-                  {% comment %} {% load profanity %} {% endcomment %}
+                  {% load profanity %}
                  <div class="ml-4 bg-light  rounded-pill w-50">
-                 {% comment %} 
+                 
                   {{form.media}}
-                 {% with sentence=comment.content %} {% endcomment %}
+                 {% with sentence=comment.content %} 
 
-                    {% comment %}  {{form.media}} {{ sentence | censor }} {% endcomment %}
-                  {% comment %} {% endwith %} {% endcomment %}
-                {{form.media}}
-                 {{comment.content}}  
+                     {{form.media}} {{ sentence | censor }}
+                  {% endwith %}
+               
                  </div> 
                  <hr>
           
