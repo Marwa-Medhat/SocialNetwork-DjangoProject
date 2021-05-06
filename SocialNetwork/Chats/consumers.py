@@ -169,7 +169,7 @@ class NotificationConsumer(WebsocketConsumer):
         count_messages = Chat.objects.filter(RecieverUser=user).count();
         count_notification = Notification.objects.filter(RecieverUser=user , seen=False).count();
         count_rooms = rooms.objects.filter(Q(user1=user , isread=False) | Q(user2=user , isread=False)).count();
-        count_friend_request = FriendRequest.objects.filter( Reciever = user , status="sent").count()
+        count_friend_request = FriendRequest.objects.filter( Reciever = user , status="send").count()
 
         self.send(text_data=json.dumps(
             {

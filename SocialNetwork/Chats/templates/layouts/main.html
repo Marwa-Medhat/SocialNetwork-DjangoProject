@@ -25,22 +25,12 @@
         </div>
         <div class="dropdown">
           <a href="{% url 'notification' %}" class="btn" role="button" ><i class="bi bi-bell text-white"><span class="badge badge-pill badge-danger" id="notification"></span></i> </a>
-          <div class="dropdown-menu dropdown-menu-right ">
-              <a class="dropdown-item " href="#">
-
-              </a>
-
-          </div>
+         
 
       </div>
          <div class="dropdown" >
-            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown"><i class="bi bi-person-plus text-white"></i> </a>
-                <div class="dropdown-menu dropdown-menu-right w-100 " >
-               
-                       
-                      
-                </div>
-                              
+            <a  class="btn" role="button" id="dropdownMenuLink" href="{%url 'my-invites-view' %}"><i class="bi bi-person-plus text-white" > <span class="badge badge-pill badge-danger" id="requests"></span></i> </a>
+                    
         </div>
         
  <div class="dropdown" >
@@ -92,10 +82,7 @@
                         <li>
                             <a href="{%url 'listusers'%}" <i class="bi bi-people-fill"></i> add friends</a>
                         </li>
-                          <li>
-				<a href="{%url 'my-invites-view' %}" <i class="bi bi-people-fill"></i>Friend Request</a>
-			</li>
-                    
+            
                 </ul>
             </div>
         </nav>
@@ -118,10 +105,13 @@ const UserName = JSON.parse(document.getElementById('myusername').textContent);
 const mynotificationSocket= new ReconnectingWebSocket(`ws://${window.location.host}/ws/notifications/${ UserName}`);
 const notificationBdget= document.getElementById('notification')
 const messageBdget= document.getElementById('messages')
+const requestsBdget= document.getElementById('requests')
+
 mynotificationSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
         notificationBdget.textContent=data['notification']; 
         messageBdget.textContent=data['messages']
+        requestsBdget.textContent=data['requests']
      
 }
 </script>
