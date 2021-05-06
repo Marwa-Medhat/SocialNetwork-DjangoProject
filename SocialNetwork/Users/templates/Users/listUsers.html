@@ -1,39 +1,51 @@
-{% extends "layouts/main.html"%}
-{%block body%}
-{% load static %}
+{% extends "layouts/main.html"%} {%block body%} {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>all users</title>
-</head>
-<body>
-    {{request.user.username}}
-    {%for user in users%}
-    {%if user.username != request.user.username %}
-    <li class="list-group-item" style="  position: relative;"> 
-        <img src="{% static 'profile/' %}{{user.profile_avatar}}" style="width: 40px; height: 40px;">
-        <a href="{% url 'userprofile' user.id %}" > {{user.first_name }} {{user.last_name }}  </a>
-        {%if username in sent_request %}
-        <a href="{% url 'friendRequest' user.id %}" class="btn btn-success" style="position: absolute;
-        bottom: 15px;
-        right: 10px;
-        color: white;">
+  </head>
+  <body>
+    {{request.user.username}} {% for user in users %} {% comment %} {% if
+    user.username != request.user.username %} {% endcomment %}
+    <li class="list-group-item" style="position: relative">
+      <img
+        src="{% static 'profile/' %}{{user.profile_avatar}}"
+        style="width: 40px; height: 40px"
+      />
+      <a href="{% url 'userprofile' user.id %}"
+        >{{user.first_name }} {{user.last_name }}</a
+      >
+      {%if username in sent_request %}
+      <a
+        href="{% url 'friendRequest' user.id %}"
+        class="btn btn-success"
+        style="position: absolute; bottom: 15px; right: 10px; color: white"
+      >
         cancel
-    </a>
-    {% else %}
-    <a href="{% url 'friendRequest' user.id %}" class="btn btn-success" style="position: absolute;
-    bottom: 15px;
-    right: 10px;
-    color: white;">
-   send friend request
-     </a>
+      </a>
+      {% else %} {% comment %}
+      <a
+        href="{% url 'friendRequest' user.id %}"
+        class="btn btn-success"
+        style="position: absolute; bottom: 15px; right: 10px; color: white"
+      >
+        send friend request
+      </a>
+      {% endcomment %}
+      <form action="{% url 'send-invite' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="profile_pk" value="{{user.id}}" />
+        <button type="submit" class="btn btn-success mt-2">
+          <i class="bi bi-check-square-fill"></i>
+          send friend request
+        </button>
+      </form>
 
-    {% endif %}
+      {% endif %}
     </li>
-    {% endif %}
-    {% endfor %}
-</body>
-{% endblock %}
+    {% comment %} {% endif %}{% endcomment %} {% endfor %}
+  </body>
+  {% endblock %}
 </html>

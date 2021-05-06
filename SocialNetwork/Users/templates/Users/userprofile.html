@@ -2,6 +2,10 @@
 
 {% load crispy_forms_tags %}
 {%block body%}
+{%for friend in friends%}
+<p>{{friend.last_name }}</p>
+ {% endfor %}
+
 <body>
 {% if request.user.is_authenticated %}
 <div class="card mb-3" style="max-width: 900px;">
@@ -44,9 +48,13 @@
       </div>
   </div>
 </div>
+{%for friend in friends%}
+    {% if friend.email == user.email %}
 <button type="button" class="btn btn-primary  ms-5" style="width: 200px;" >
   Send Message
 </button>
+{% endif %}
+ {% endfor %}
 {% else %}
 <p><a href="{% url 'register'%}">Register</a> | <a href="{% url 'login' %}">Login</a></p>
 {% endif %}

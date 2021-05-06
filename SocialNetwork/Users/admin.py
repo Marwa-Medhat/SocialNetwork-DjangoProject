@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import CustomUser
+from .models import CustomUser, Friend, FriendRequest
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
-# admin.site.register(CustomUser)
+#
 
 
 class AccountAdmin(UserAdmin):
@@ -17,4 +17,8 @@ class AccountAdmin(UserAdmin):
     fieldsets = ()
 
 
+# admin.site.register(CustomUser)
+# admin.site.register(AccountAdmin)
 admin.site.register(CustomUser, AccountAdmin)
+admin.site.register(FriendRequest)
+admin.site.register(Friend)

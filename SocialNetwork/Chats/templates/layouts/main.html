@@ -1,57 +1,37 @@
 <html>
-<head>
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
 <body class="bg-light ">
-<div class="navbar navbar-expand-lg navbar-light " style="background-color: #2c3e50;">
-<button type="button" data-toggle="collapse" class="btn btn-primary"  data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
+    <div class="navbar navbar-expand-lg navbar-light " style="background-color: #2c3e50;">
+        <button type="button" data-toggle="collapse" class="btn btn-primary" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
 	         <i class="bi bi-list"></i>
 	         
 	        </button>
-             <a href="{% url 'index' %}" class="mr-auto text-white h4"> <i class="bi bi-house ml-4"></i>My Home </a>
-            <div class="d-flex align-content-aroundr">
-		    <div class="input-group ">
-               <div class="form-outline ">
-                  <input type="search" class="form-control rounded-pill ml-5" />
-    
-                </div>
-                  <button  type="button" class="btn rounded-pill ">
-                     <i class="bi bi-search "></i>
-                  </button>
+        <a href="{% url 'index' %}" class="mr-auto text-white h4"> <i class="bi bi-house ml-4"></i>My Home </a>
+       <p  style="color: white;"> {{request.user.first_name}}</p>
+        <div class="dropdown">
+            <a class="btn" role="button" data-toggle="dropdown"><i class="bi bi-bell text-white"></i> </a>
+            <div class="dropdown-menu dropdown-menu-right ">
+                <a class="dropdown-item " href="#">
+
+                </a>
+
             </div>
-			</div>
-  <div class="dropdown" >
-            <a  class="btn" role="button"  data-toggle="dropdown"  ><i class="bi bi-bell text-white"></i> </a>
-                <div class="dropdown-menu dropdown-menu-right " >
-                       <a class="dropdown-item " href="#" >
-                         
-                        </a> 
-                      
-                </div>
-                              
-        </div>
-		 <div class="dropdown" >
-            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown"><i class="bi bi-chat-square-text text-white"></i> </a>
-                <div class="dropdown-menu dropdown-menu-right " >
-                       <a class="dropdown-item " href="#" >
-                         
-                        </a> 
-                      
-                </div>
-                              
+
         </div>
          <div class="dropdown" >
             <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown"><i class="bi bi-person-plus text-white"></i> </a>
-                <div class="dropdown-menu dropdown-menu-right " >
-                       <a class="dropdown-item " href="#" >
-                         
-                        </a> 
+                <div class="dropdown-menu dropdown-menu-right w-100 " >
+               
+                       
                       
                 </div>
                               
@@ -66,53 +46,66 @@
                 </div>
                               
         </div>
-
-       
-</div>
-		<div class="wrapper d-flex align-items-stretch">
-			<nav class="btn bg-white">
-				<div class="custom-menu">
-					
-        </div>
-				<div class="p-4 pt-5 collapse multi-collapse" id="multiCollapseExample2">
-		  	
-	        <ul class="list-unstyled components mb-5">
-           <li class="active">
-          <img src="{{request.user.profile_avatar.url}}" width="200px" height="200px;" class="p-10 rounded-circle">
-          <h2>
-          
-          <a href="{% url 'userprofile' user.id %}" >
-          
-          {{request.user.first_name}} {{request.user.last_name}}
-        </a>
-          <h2>
-           </li>
-	          <li class="active">
-	             <a href="{% url 'profile' %}" ><i class="bi bi-person"></i>My Profile</a>
-	           
-	          <li>
-	              <a href="#" <i class="bi bi-people-fill"></i> Groups</a>
-	          </li>
-			  <li>
-				<a href="#" <i class="bi bi-people-fill"></i>friends</a>
-			</li>
-			  <li>
-				<a href="{%url 'listusers'%}" <i class="bi bi-people-fill"></i> add friends</a>
-			</li>
       
-            </ul>
-	      </div>
-    	</nav>
-		
-     	
 
-<div class="container mt-4" >
-{%block body%}
-{% endblock %}
-</div> 
 
- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </div>
+    <div class="wrapper d-flex align-items-stretch">
+        <nav class="btn bg-white">
+            <div class="custom-menu">
+
+            </div>
+            <div class="p-4 pt-5 collapse multi-collapse" id="multiCollapseExample2">
+
+                <ul class="list-unstyled components mb-5">
+                    <li class="active">
+                    <img src="{{request.user.profile_avatar.url}}" width="200px" height="200px;" class="p-10 rounded-circle">
+                        <h2>{{request.user.first_name}} {{request.user.last_name}}<h2>
+                     </li>  
+                     <li class="active"> 
+                        <a href="{% url 'profile' %}"><i class="bi bi-person"></i>My Profile</a>
+
+                        <li>
+                            <a href="{%url 'listgroup'%}" <i class="bi bi-people-fill"></i> Groups</a>
+
+                        </li>
+
+                        <li>
+                            <a href="{%url 'creategroup'%}" <i class="bi bi-people-fill"></i>Create new Group</a>
+
+                        </li>
+                        <li>
+                            <a href="" <i class="bi bi-people-fill"></i>Your groups</a>
+
+                        </li>
+                        <li>
+                       
+                            <a href="{%url 'friendslist' %}" <i class="bi bi-people-fill"></i>friends</a>
+                        </li>
+                        <li>
+                            <a href="{%url 'listusers'%}" <i class="bi bi-people-fill"></i> add friends</a>
+                        </li>
+                          <li>
+				<a href="{%url 'my-invites-view' %}" <i class="bi bi-people-fill"></i>Friend Request</a>
+			</li>
+                        <li>
+                            <a href="{% url 'logout' %}">
+                                <i class="bi bi-box-arrow-in-right ml-3">logout</i>
+                            </a>
+                        </li>
+                </ul>
+            </div>
+        </nav>
+
+
+
+        <div class="container mt-4">
+            {%block body%} {% endblock %}
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
+
 </html>

@@ -24,6 +24,7 @@ urlpatterns = [
     path('chat/' , include("Chats.urls")),
     path('users/', include('Users.urls')),
     path('posts/', include('Posts.urls')),
+    path('groups/', include('Groups.urls')),
 
 ]
 if settings.DEBUG:
