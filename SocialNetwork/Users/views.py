@@ -5,9 +5,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import auth
 from django.contrib import messages
 from .models import CustomUser, FriendRequest
-
+from django.http import HttpResponse, HttpResponseNotFound
 # from .models import UserDetails
-from .models import CustomUser
+from .models import CustomUser, Friend
 
 
 # Create your views here.
@@ -172,3 +172,19 @@ def send_invatation(request):
 
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect('profile')
+
+
+def friendslist(request):
+    # return render('friendslist')
+    findfriend = []
+    friends = Friend.objects.all()
+    for friend in friends:
+        # print(friend)
+        # print(request.user.username)
+        # print(friend.user1.username)
+        if request.user.username == friend.user1.username:
+            print(friend.user2)
+            # findfriend = friend.user2
+            findfriend.append(friend.user2)
+    return render(request, 'Users/friendslist.html', {'friends':  findfriend})
+    # return HttpResponse('<h1>Page was found</h1>')

@@ -108,7 +108,7 @@ class Friend(models.Model):
     #     CustomUser, blank=True, related_name='friends')
 
     def __str__(self):
-        return f"{self. friends} friends"
+        return f"{self.  user1}  user1    {self.  user2}  user2"
 
 
 STATUS_CHOICES = (
