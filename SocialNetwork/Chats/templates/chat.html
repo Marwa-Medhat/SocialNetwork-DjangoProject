@@ -51,8 +51,8 @@
 				<li class="contact active">
 					<div class="wrap">
 						{% if room.user1.username == request.user.username %}
-						<a href = "{% url 'chatroom' room.user2.id %}">
-						<span class="contact-status busy"></span>
+						<a href = "{% url 'chatroom' room.user2.id %}" >
+						<span class="contact-status busy "></span>
 						<img src="{% static 'profile/' %}{% if room.user1.username == request.user.username%}{{room.user2.profile_avatar}}{% else %}{{room.user1.profile_avatar }}{%endif%}" alt="" />
 						</a>
 						{% else %}
@@ -61,10 +61,21 @@
 							<img src="{% static 'profile/' %}{% if room.user1.username == request.user.username%}{{room.user2.profile_avatar}}{% else %}{{room.user1.profile_avatar }}{%endif%}" alt="" />
 						</a>
 						{%endif%}
+						{% if room.isread%}
 						<div class="meta">
+							
 							<p class="name">{% if room.user1.username == request.user.username%} {{room.user2.username}} {% else %} {{room.user1.username }}{%endif%} </p>
 							<p class="preview"></p>
 						</div>
+						{%else%}
+						<div class="meta">
+							
+						<strong> <h6 class="name">{% if room.user1.username == request.user.username%} {{room.user2.username}} {% else %} {{room.user1.username }}{%endif%} </p> </strong>
+							<p class="preview"></p>
+						</div>
+
+						{% endif%}
+
 					</a>
 					</div>
 				</li>
@@ -73,10 +84,11 @@
 		</div>
 	
 	</div>
+	{% if roomdetail %}
 	<div class="content">
 		<div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-			<p>{{room_name}}</p>
+			<img src="{% static 'profile/' %}{% if roomdetail.user1.username == request.user.username%}{{roomdetail.user2.profile_avatar}}{% else %}{{roomdetail.user1.profile_avatar }}{%endif%}" alt="" />
+			<p>{% if roomdetail.user1.username == request.user.username%}{{roomdetail.user2.first_name}}{% else %}{{roomdetail.first_name}}{%endif%}</p>
 		
 		</div>
 		<div class="messages">
@@ -93,6 +105,7 @@
 			</div>
 		</div>
 	</div>
+	{% endif %}
     {{ room_name|json_script:"room-name" }}
     {{ username|json_script:"username" }}
 </div>

@@ -1,0 +1,23 @@
+{% extends "layouts/main.html"%} {%block body%} {% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>all users</title>
+</head>
+
+<body>
+    
+    {%for notification in notifications %}
+    <li class="list-group-item" style="  position: relative; cursor: pointer;">
+        <a href="{%url 'details' notification.post.id %}">{{  notification.content }}</a> 
+
+
+    </li>
+    {% endfor %}
+</body>
+{% endblock %}
+
+</html>;2

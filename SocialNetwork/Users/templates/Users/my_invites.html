@@ -1,0 +1,49 @@
+{% extends "layouts/main.html"%} {%block body%} {% load static %}
+<ul>
+  {% for item in qs %} {% comment %}
+  <li>{{item.pk}}</li>
+  {% endcomment %}
+  <li class="list-group-item" style="position: relative">
+    <img src="{{item.profile_avatar.url}}" style="width: 40px; height: 40px" />
+    <a href="{% url 'userprofile' user.id %}">
+      {{item.first_name }} {{item.last_name }}
+    </a>
+    reject-invite
+    <form action="{% url 'accept-invite' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="profile_pk" value="{{item.pk}}" />
+      <button type="submit" class="btn btn-success mt-2">
+        <i class="bi bi-check-square-fill"></i>
+        Accept invite
+      </button>
+    </form>
+    <form action="{% url 'reject-invite' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="profile_pk" value="{{item.pk}}" />
+      <button type="submit" class="btn btn-danger mb-5">
+        <i class="bi bi-x-square-fill"></i>
+        Reject invite
+      </button>
+    </form>
+    {% comment %} {%if username in sent_request %}
+    <a
+      href="{% url 'friendRequest' user.id %}"
+      class="btn btn-success"
+      style="position: absolute; bottom: 15px; right: 10px; color: white"
+    >
+      cancel
+    </a>
+    {% else %}
+    <a
+      href="{% url 'friendRequest' user.id %}"
+      class="btn btn-success"
+      style="position: absolute; bottom: 15px; right: 10px; color: white"
+    >
+      send friend request
+    </a>
+    {% endif %} {% endcomment %} {% endfor %}
+  </li>
+</ul>
+{% if is_empty %}
+<h1>No invatations here..</h1>
+{% endif %} {% endblock %}

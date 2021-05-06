@@ -5,6 +5,7 @@ from .models import Chat  , rooms
 from Users.models import CustomUser
 from django.db.models import Q
 from django.core.mail import EmailMultiAlternatives
+from Notifications.models import Notification
 
 class ChatConsumer(WebsocketConsumer):
     def message_to_json(self, message):
@@ -43,17 +44,20 @@ class ChatConsumer(WebsocketConsumer):
         # Reciver = CustomUser.objects.get(pk=self.room_name)
         Reciver = ""
         room = rooms.objects.get(pk=self.room_name) 
-        if room.user1 == user:
+        if room.user1 == sender:
             Reciver = room.user2
         else:
-            Reciver = room.user2    
+            Reciver = room.user1    
+        room.isread=False
+        room.save()    
 
 
         message = Chat.objects.create(senderUser=sender,RecieverUser =Reciver, content=data['message'])
         room.room_messages.add(message)
 
         
-        # self.send_email(Reciver.email)
+     
+     
         
         # else http://localhost:8000/chat/3/:
         #    room=rooms.objects.create(user1=sender,user2=Reciver);
@@ -66,7 +70,11 @@ class ChatConsumer(WebsocketConsumer):
             'command': 'new_message',
             'message': self.message_to_json(message)
         }
+        # self.send_email(Reciver.email)
         return self.send_chat_message(content)
+       
+
+
     commands={
         'fetch-messages':fetch_messages,
         'new-message':new_message
@@ -99,7 +107,7 @@ class ChatConsumer(WebsocketConsumer):
 
     def send_chat_message(self , message):    
         # Send message to room group
-        print("hiiiiiii")
+       
         async_to_sync( self.channel_layer.group_send)(
             self.room_group_name,
             {
@@ -119,11 +127,12 @@ class ChatConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps(message))
 
     def send_email(self , email):
+        print("email" + email)
         subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
         text_content = 'This is an important message.'
         html_content = '<p>This is an <strong>important</strong> message.</p>'
-        msg = EmailMultiAlternatives(subject, html_content, 'lifehotel881@gmail.com', [email])
-        msg.send()    
+        msg = EmailMultiAlternatives(subject, html_content, 'onarir', [email])
+        async_to_sync( msg.send() )   
 
 
         # Send message to WebSocket
@@ -153,14 +162,18 @@ class NotificationConsumer(WebsocketConsumer):
             self.channel_name
            
         )
+     
 
         self.accept()
         user = CustomUser.objects.get(username=self.user_name)
         count_messages = Chat.objects.filter(RecieverUser=user).count();
-
+        count_notification = Notification.objects.filter(RecieverUser=user , seen=False).count();
+        count_rooms = rooms.objects.filter(Q(user1=user , isread=False) | Q(user2=user , isread=False)).count();
         self.send(text_data=json.dumps(
             {
-                'messages' : count_messages,
+                'messages' : count_rooms,
+                'notification' : count_notification,
+                
                 
               
             }
@@ -169,10 +182,19 @@ class NotificationConsumer(WebsocketConsumer):
     def receive(self, text_data):
         user = CustomUser.objects.get(username=self.user_name)
         count_messages = Chat.objects.filter(RecieverUser=user).count();
+        count_rooms = rooms.objects.filter(Q(user1=user , isread=False) | Q(user2=user , isread=False)).count();
+        count_notification = Notification.objects.filter(RecieverUser=user , seen=False).count();
         self.send(text_data=json.dumps(
             {
-                'messages' : count_messages,
+                'messages' : count_rooms,
+                'notification' : count_notification,
                 
               
             }
         )) 
+    def disconnect(self, close_code):
+        # Leave room group
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name,
+            self.channel_name
+        )    

@@ -5,6 +5,6 @@ from Users.models import CustomUser
 
 class Group(models.Model):
     name = models.CharField(max_length=50)
-    owner = models.CharField(max_length=50)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     creation_date = models.DateField(auto_now=True)
     members = models.ManyToManyField(CustomUser, related_name="joinedgroups")

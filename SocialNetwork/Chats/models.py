@@ -23,6 +23,7 @@ class rooms(models.Model):
     user1 = models.ForeignKey(CustomUser, on_delete=models.CASCADE , related_name="user1")
     user2 = models.ForeignKey(CustomUser, on_delete=models.CASCADE , related_name="user2")
     room_messages= models.ManyToManyField(Chat, related_name="messages") 
+    isread = models.BooleanField(default=False)
     class Meta:
         unique_together = (('user1', 'user2'), ('user2', 'user1'))
 
