@@ -45,18 +45,28 @@
                           <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm"> <i class="bi bi-hand-thumbs-up"></i>Like </button>
                       {% endif %}
                       </form>
-        </div>  
-      
-         <p style="color:grey"> {{total_likes}} Like </p>            
+                         <p style="color:grey"> {{total_likes}} Like </p>            
          <hr> 
-          
-          <div class="card-body ">         
+        </div>  
+ 
+          <div class="card-body ">     
+              
             {% if not post.post.all %}
               <p></p>
                {% else %}
               {% for comment in post.post.all %}
                  <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> {{comment.user.username}}</strong>
-                 <p class="text-muted">{{comment.creation_date_time}}</p></div>
+                 {% if comment.user.id == request.user.id %}
+                 <p class="text-muted">{{comment.creation_date_time}}</p></div> 
+                 <form action="{% url 'delete_comment'  %}" method="POST">
+                                  {% csrf_token %}
+                   <input type='hidden' value='{{post.id}}' name='id'>
+                   <input type="hidden" name="comment_id" value="{{comment.id}}" />
+                            <button type="submit" class="border-0 float-right">
+                                       <i class="bi bi-trash text-danger"></i>
+                                     </button>
+                            </form>
+                {% endif%}
                   {% comment %} {% load profanity %} {% endcomment %}
                  <div class="ml-4 bg-light  rounded-pill w-50">
                  {% comment %} 
@@ -66,7 +76,7 @@
                     {% comment %} {{ sentence | censor }} {% endcomment %}
                   {% comment %} {% endwith %} {% endcomment %}
                 {{form.media}}
-                 {{comment.content}}
+                 {{comment.content}}  
                  </div> 
                  <hr>
           
@@ -74,7 +84,7 @@
              
             {% endif %}
            
-          
+          </div>
             <form action="{% url 'comment' post.id %}" method="post">
               {% load crispy_forms_tags %}
               {%csrf_token%}
@@ -87,12 +97,11 @@
                   </div>  
                
             </form>  
-          </div> 
+     
       </div>       
        
   </div>
   
-     
  
 
  <a class="btn btn-warning ml-5 mb-5" href="{% url 'index' %}">Back</a>

@@ -4,6 +4,7 @@ from .forms import PostsCreateForm, CommentsCreateForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 
+
 # Create your views here.
 
 
@@ -61,7 +62,9 @@ def details(request, id):
     data = {'post_id': post.id}
     comment = CommentsCreateForm(request.POST or None, initial=data)
     form = PostsCreateForm(request.POST or None)
+   
     is_liked = False
+    is_removed=False
     if post.likes.filter(id=request.user.id).exists():
         is_liked = True
  
@@ -70,6 +73,7 @@ def details(request, id):
         "post": post,
         "comment": comment,
         'is_liked': is_liked,
+        'is_removed':is_removed,
         'total_likes': post.total_likes(),
  
     })
@@ -78,6 +82,7 @@ def comment(request, id):
     post = Post.objects.get(id=id)
     data = {'post_id': post.id}
     comment = CommentsCreateForm(request.POST or None, initial=data)
+    
     if comment.is_valid():
         comments = comment.save(commit=False)
         comments.user_id= request.user.id
@@ -85,7 +90,11 @@ def comment(request, id):
         return redirect("details", id=post.id)
     return HttpResponseRedirect(post.get_absolute_url())
 
-
+def delete_comment(request):
+    post = request.POST.get('id')
+    comment = get_object_or_404(Comment, id=request.POST.get('comment_id'))
+    comment.delete()
+    return redirect("details", id=post)
 def like_post(request):
     # whenever "post_id" is clicked #esm el button
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
@@ -98,13 +107,7 @@ def like_post(request):
         # like post
         post.likes.add(request.user)
         is_liked = True
-    # return render(request,"posts/details.html",
-    # {
-    #     "post":post,
-    #     'is_liked':is_liked,
-    #     'total_likes': post.total_likes()
-    # })
-
+   
     return HttpResponseRedirect(post.get_absolute_url())
 
 

@@ -87,7 +87,7 @@
         <p class="card-text text-primary h5">  <img src="{{post.user_id.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
             {{ post.user_id.username }}</p>
                  <p class="card-text  text-muted "> {{post.creation_date_time}}</p>  
-     </div>   
+         </div>   
           
           <div class="card-body">   
           {% if post.post_image %}              
@@ -95,13 +95,13 @@
         </br><p class="card-text  mt-2 h6">{{post.content}} <a href="{% url 'details' post.pk %}">More</a></p>
 
        
-
+         </div>
        
        
        
                        
-        </div>                  
- </div>
+      </div>                  
+
 
 {% endfor %}
 </div>

@@ -100,7 +100,7 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'socialnetwork',
+        'NAME': 'SocialNetwork',
         'USER': 'root',
         'PASSWORD': 'root',
         'Host': 'localhost',
