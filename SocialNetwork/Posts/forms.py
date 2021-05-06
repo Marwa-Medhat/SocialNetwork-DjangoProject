@@ -16,8 +16,31 @@ class PostsCreateForm(forms.ModelForm):
     class Meta:
         model = Post
         fields="__all__"
-        exclude = ['user_id','likes']
+
+        exclude = ['user_id', 'Group_id', 'likes']
+
+        widgets = {
+        'Group_id': forms.HiddenInput(),
+         }
+
+
+
+class AdminPostsCreateForm(forms.ModelForm):
+    content = forms.CharField(label ="", widget = forms.Textarea(
+    attrs ={
+    
+        'class':'form-control',
+        'placeholder':' write post here !',
+        'rows':1,
+        'cols':20
+    }))
+    
+    class Meta:
+        model = Post
+        fields="__all__"
+    
        
+        
         
 class CommentsCreateForm(forms.ModelForm):
     content = forms.CharField(label ="", widget = forms.Textarea(
@@ -48,6 +71,27 @@ class CommentsCreateForm(forms.ModelForm):
 
   # bi5fy el field men 8air ma ab3t kima 
 
+
+
+class CommentsAdminEditForm(forms.ModelForm):
+    content = forms.CharField(label ="", widget = forms.Textarea(
+    attrs ={
+        'class':'form-control rounded-pill',
+        'placeholder':'Comment here !',
+        'rows':2,
+        'cols':10,
+        
+    }))
+    
+    class Meta:
+        model=Comment
+        fields ="__all__"
+        widgets = {
+           'user' :forms.HiddenInput(),
+           'post_id' :forms.HiddenInput(),
+         }
+      
+
 class CommentsAdminCreateForm(forms.ModelForm):
     content = forms.CharField(label ="", widget = forms.Textarea(
     attrs ={
@@ -62,7 +106,10 @@ class CommentsAdminCreateForm(forms.ModelForm):
         model=Comment
         fields ="__all__"
         widgets = {
+           'user' :forms.HiddenInput(),
+        
          }
       
+
       
     

@@ -1,4 +1,5 @@
 from Users.forms import RegistrationForm, AccountAuthenticationForm, profileForm
+from Posts.models import Post, Comment
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import auth
@@ -13,12 +14,13 @@ from .models import CustomUser
 # profile page
 def index(request):
     users = CustomUser.objects.all()
+    
+
     # # sent_requests = FriendRequest.objects.get(Sender_id=request.user.id)
     # print(sent_requests)
     return render(request, 'Users/listUsers.html',
                   {
                       'users': users,
-
                   })
 
 
@@ -28,9 +30,11 @@ def profile(request):
 
 def userprofile(request, id):
     user = CustomUser.objects.get(pk=id)
+    posts = Post.objects.all()
     return render(request, 'Users/userprofile.html',
                   {
-                      'user': user
+                      'user': user,
+                        "posts": posts,
                   })
 
 
