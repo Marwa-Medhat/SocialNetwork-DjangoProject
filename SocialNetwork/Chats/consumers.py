@@ -2,8 +2,8 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from .models import Chat  , rooms
-from Users.models import CustomUser
-from django.db.models import Q
+from Users.models import CustomUser , FriendRequest
+from django.db.models import Q 
 from django.core.mail import EmailMultiAlternatives
 from Notifications.models import Notification
 
@@ -169,10 +169,13 @@ class NotificationConsumer(WebsocketConsumer):
         count_messages = Chat.objects.filter(RecieverUser=user).count();
         count_notification = Notification.objects.filter(RecieverUser=user , seen=False).count();
         count_rooms = rooms.objects.filter(Q(user1=user , isread=False) | Q(user2=user , isread=False)).count();
+        count_friend_request = FriendRequest.objects.filter( Reciever = user , status="sent").count()
+
         self.send(text_data=json.dumps(
             {
                 'messages' : count_rooms,
                 'notification' : count_notification,
+                'requests' : count_friend_request,
                 
                 
               
