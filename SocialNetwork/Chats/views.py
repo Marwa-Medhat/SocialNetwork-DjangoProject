@@ -2,7 +2,11 @@ from django.shortcuts import render
 from django.db.models import Q
 from.models import rooms
 from Users.models import CustomUser
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+
+@login_required() 
 def index(request):
        
         userrooms= rooms.objects.filter(Q(user1=request.user) | Q(user2=request.user))
@@ -17,6 +21,7 @@ def index(request):
     })
     
 
+@login_required() 
 def room(request, user_id):
         
         room_name=""

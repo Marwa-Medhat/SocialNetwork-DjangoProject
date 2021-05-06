@@ -17,7 +17,6 @@
 	         
 	        </button>
         <a href="{% url 'index' %}" class="mr-auto text-white h4"> <i class="bi bi-house ml-4"></i>My Home </a>
-       <p  style="color: white;"> {{request.user.first_name}}</p>
         <div class="dropdown">
             <a class="btn" role="button" href="{% url 'chat' %}" ><i class="bi bi-chat text-white"><span class="badge badge-pill badge-danger" id="messages"></span></i> </a>
           
@@ -25,26 +24,16 @@
         </div>
         <div class="dropdown">
           <a href="{% url 'notification' %}" class="btn" role="button" ><i class="bi bi-bell text-white"><span class="badge badge-pill badge-danger" id="notification"></span></i> </a>
-          <div class="dropdown-menu dropdown-menu-right ">
-              <a class="dropdown-item " href="#">
-
-              </a>
-
-          </div>
+         
 
       </div>
          <div class="dropdown" >
-            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown"><i class="bi bi-person-plus text-white"></i> </a>
-                <div class="dropdown-menu dropdown-menu-right w-100 " >
-               
-                       
-                      
-                </div>
-                              
+            <a  class="btn" role="button" id="dropdownMenuLink" href="{%url 'my-invites-view' %}"><i class="bi bi-person-plus text-white" > <span class="badge badge-pill badge-danger" id="requests"></span></i> </a>
+                    
         </div>
         
  <div class="dropdown" >
-            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" ><img src="{{request.user.profile_avatar.url}}" width="30px" height="30px;" class="p-10 rounded-circle"> </a>
+            <a  class="btn text-white" role="button" id="dropdownMenuLink" data-toggle="dropdown" >{{request.user.first_name}} <img src="{{request.user.profile_avatar.url}}" width="30px" height="30px;" class="p-10 rounded-circle"> </a>
                 <div class="dropdown-menu dropdown-menu-right" >
                        <a class="dropdown-item " href="{% url 'logout' %}" >
                           <i class="bi bi-box-arrow-in-right ml-3">logout</i> 
@@ -92,10 +81,7 @@
                         <li>
                             <a href="{%url 'listusers'%}" <i class="bi bi-people-fill"></i> add friends</a>
                         </li>
-                          <li>
-				<a href="{%url 'my-invites-view' %}" <i class="bi bi-people-fill"></i>Friend Request</a>
-			</li>
-                    
+            
                 </ul>
             </div>
         </nav>
@@ -118,10 +104,13 @@ const UserName = JSON.parse(document.getElementById('myusername').textContent);
 const mynotificationSocket= new ReconnectingWebSocket(`ws://${window.location.host}/ws/notifications/${ UserName}`);
 const notificationBdget= document.getElementById('notification')
 const messageBdget= document.getElementById('messages')
+const requestsBdget= document.getElementById('requests')
+
 mynotificationSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
         notificationBdget.textContent=data['notification']; 
         messageBdget.textContent=data['messages']
+        requestsBdget.textContent=data['requests']
      
 }
 </script>
