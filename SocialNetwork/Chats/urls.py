@@ -7,5 +7,5 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<str:room_name>/', views.room, name='chatroom'),
+    path('<str:user_id>/', views.room, name='chatroom'),
 ]

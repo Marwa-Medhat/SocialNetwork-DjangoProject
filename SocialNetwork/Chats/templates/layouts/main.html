@@ -97,6 +97,7 @@
     	</nav>
 		
       {{ request.user.id|json_script:"user" }}	
+      {{ request.user.username|json_script:"username" }}	
 
 <div class="container mt-4" >
 {%block body%}
@@ -108,8 +109,8 @@
  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
  <script src="{% static 'js/reconnecting.js' %}"></script>
  <script>
- 
-     const notificationSocket = new ReconnectingWebSocket(`ws://${window.location.host}/ws/notifications`);
+    const user_name = JSON.parse(document.getElementById('username').textContent);
+     const notificationSocket = new ReconnectingWebSocket(`ws://${window.location.host}/ws/notifications/${user_name}`);
      const user = JSON.parse(document.getElementById('user').textContent);
      console.log(user)
      

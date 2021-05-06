@@ -186,6 +186,10 @@
             'from':username
            
         }));
+		notificationSocket.send(JSON.stringify({
+    
+        "command":"start"
+  }))
     
 };
 
