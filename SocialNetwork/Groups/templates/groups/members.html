@@ -1,0 +1,29 @@
+{% extends "layouts/main.html"%} {%block body%} {% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Group Members</title>
+</head>
+
+<body>
+    <h1>List of Group Members</h1>
+    {%for member in members%}
+    <li class="list-group-item" style="  position: relative; cursor: pointer;">
+        <a href="">{{member.first_name}} {{member.last_name}}</a>
+        <a href="{% url 'delete' group.id member.id %}" class="btn btn-danger" style="position: absolute;
+        bottom: 5px;
+        right: 10px;
+        color: white;">
+        delete
+         </a>
+
+
+    </li>
+    {% endfor %}
+</body>
+{% endblock %}
+
+</html>
