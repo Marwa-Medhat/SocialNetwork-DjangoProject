@@ -119,7 +119,7 @@
 document.getElementById('comment').onclick= function (e){
 // console.log(postUserName)
 const postUserName = JSON.parse(document.getElementById('postusername').textContent);  
-console.log("owner"+postUserName);
+
 const notificationSocket= new ReconnectingWebSocket(`ws://${window.location.host}/ws/notifications/${postUserName}`);  
   notificationSocket.send(JSON.stringify({
     

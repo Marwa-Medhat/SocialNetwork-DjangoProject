@@ -119,6 +119,7 @@ STATUS_CHOICES = (
 
 
 class FriendRequest(models.Model):
+ 
     Reciever = models.ForeignKey(
         CustomUser, related_name="recieverRequest", on_delete=models.CASCADE)
     Sender = models.ForeignKey(
@@ -130,6 +131,7 @@ class FriendRequest(models.Model):
     #     auto_now_add=True, default=timezone.now())
 
     objects = RelationshipManager()
+
 
     def __str__(self):
         return f"{self. Reciever} Reciever           {self.  Sender} Sender      {self.  status} Status"

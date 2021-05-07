@@ -4,24 +4,49 @@ from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import auth
 from django.contrib import messages
-from .models import CustomUser, FriendRequest
+from .models import CustomUser, FriendRequest 
 from django.http import HttpResponse, HttpResponseNotFound
 # from .models import UserDetails
 from .models import CustomUser, Friend
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import Q
 
 
 # Create your views here.
 # profile page
 # @login_required()
 def index(request):
+    Reciever = []
+    Sender=[]
+    friends =[]
     users = CustomUser.objects.all()
+    userfriends= Friend.objects.filter(Q(user1=request.user) | Q(user2=request.user))
+    sent_requests = FriendRequest.objects.filter(Sender=request.user , status = "send")
+    Recieverd_requests = FriendRequest.objects.filter(Reciever =request.user , status = "send")
+    for requestall in sent_requests.iterator():
+        Reciever.append(requestall.Reciever.id)
+    for recievedRequest in  Recieverd_requests:
+        Sender.append(recievedRequest.id)
+    for friend in  userfriends:
+        friends.append(friend.user1.id)
+        friends.append(friend.user2.id)
 
-    # # sent_requests = FriendRequest.objects.get(Sender_id=request.user.id)
-    # print(sent_requests)
+
+
+
+
+    #     Reciever.append(request. Reciever.username)
+
+    print("-------------------------------------------")
+    print( Reciever)
+    print("-------------------------------------------")
     return render(request, 'Users/listUsers.html',
                   {
                       'users': users,
+                      'sended':Reciever,
+                      'recieved': Sender,
+                      'friends': friends
+                    
                   })
 
 # @login_required()
