@@ -225,3 +225,33 @@ def friendslist(request):
             findfriend.append(friend.user2)
     return render(request, 'Users/friendslist.html', {'friends':  findfriend})
     # return HttpResponse('<h1>Page was found</h1>')
+
+
+def cancelFriendrequest(request):
+    if request.method=='POST':
+        pk = request.POST.get('profile_pk')
+        user = request.user
+        sender = CustomUser.objects.get(username=request.user.username)
+        receiver = CustomUser.objects.get(pk=pk)
+
+        rel = FriendRequest.objects.get(
+            (Q(Sender=sender) & Q(Reciever=receiver)) | (Q(Sender=receiver) & Q(Reciever=sender))
+        )
+        rel.delete()
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('profile')
+
+def RemoveFriend(request):
+    if request.method=='POST':
+        pk = request.POST.get('profile_pk')
+        user = request.user
+        sender = CustomUser.objects.get(username=request.user.username)
+        receiver = CustomUser.objects.get(pk=pk)
+
+        rel = FriendRequest.objects.get(
+            (Q(Sender=sender) & Q(Reciever=receiver)) | (Q(Sender=receiver) & Q(Reciever=sender))
+        )
+        rel.delete()
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('profile')
+       
