@@ -61,15 +61,17 @@ def profile(request):
 
 def userprofile(request, id):
     user = CustomUser.objects.get(pk=id) #al user lma bdos 3la click
-    user1 = CustomUser.objects.get(pk=request.user.id)
-    print(user1) ##al user 2li da5l
-    findfriend = []
-    friends = Friend.objects.all()
-    for friend in friends:
-        if request.user.username == friend.user1.username: # lw al user 2li da5l howa howa al sender
-            print(friend.user2)
-            findfriend.append(friend.user2) #yb2a dol as7abo 
+    # user1 = CustomUser.objects.get(pk=request.user.id)
+    # print(user1) ##al user 2li da5l
+    # findfriend = []
+    # friends = Friend.objects.all()
+    # for friend in friends:
+    #     if request.user.username == friend.user1.username: # lw al user 2li da5l howa howa al sender
+    #         print(friend.user2)
+    #         findfriend.append(friend.user2) #yb2a dol as7abo 
 
+    findfriend = Friend.objects.filter(
+    Q(user1=request.user , user2 =user ) | Q(user2=request.user , user1=user))
     posts = Post.objects.all()
     return render(request, 'Users/userprofile.html',
                   {
@@ -212,18 +214,9 @@ def send_invatation(request):
 
 
 def friendslist(request):
-    # return render('friendslist')
-    findfriend = []
-    friends = Friend.objects.all()
-    for friend in friends:
-        # print(friend)
-        # print(request.user.username)
-        # print(friend.user1.username)
-        if request.user.username == friend.user1.username:
-            print(friend.user2)
-            # findfriend = friend.user2
-            findfriend.append(friend.user2)
-    return render(request, 'Users/friendslist.html', {'friends':  findfriend})
+    friends = Friend.objects.filter(
+    Q(user1=request.user) | Q(user2=request.user))
+    return render(request, 'Users/friendslist.html', {'friends': friends})
     # return HttpResponse('<h1>Page was found</h1>')
 
 
