@@ -4,10 +4,11 @@ from Groups.models import Group
 from .forms import PostsCreateForm, CommentsCreateForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
-
+from Notifications.models import Notification
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-
+@login_required() 
 def index(request):
 
     posts = Post.objects.filter(Group_id__isnull=True)
@@ -19,24 +20,25 @@ def index(request):
                   {
                       "posts": posts,
                       "form": form,
-                   
+
                   })
 
 
+@login_required() 
 def create(request):
     # user = request.user
     # if not user.is_authenticated:
     #     return redirect('mustauth')
     global post
-    form = PostsCreateForm(request.POST or None)
+    form = PostsCreateForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         user_id = request.user
         content = form.cleaned_data.get('content')
-        if form.cleaned_data.get('post_image') : 
+        if form.cleaned_data.get('post_image'):
             postImg = form.cleaned_data.get('post_image')
-            post = Post(content=content , post_image=postImg , user_id=user_id  )
-        else : 
-            post = Post(content=content ,user_id=user_id  )
+            post = Post(content=content, post_image=postImg, user_id=user_id)
+        else:
+            post = Post(content=content, user_id=user_id)
         url = request.META.get('HTTP_REFERER')
         url = url.split("/")
         if len(url) == 5:
@@ -47,24 +49,27 @@ def create(request):
         post.save()
         #forms = form.save(commit=False)
         #forms.user_id_id = request.user.id
-        #forms.save()
-        #return redirect("index")
-        #return HttpResponseRedirect(request.path_info)
+        # forms.save()
+        # return redirect("index")
+        # return HttpResponseRedirect(request.path_info)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return render(request, "posts/create.html", {
         "form": form,
     })
 
 
+@login_required() 
 def destroy(request, id):
     post = Post.objects.get(id=id)
     post.delete()
     return redirect("index")
 
 
+@login_required() 
 def edit(request, id):
     post = Post.objects.get(id=id)
-    form = PostsCreateForm(request.POST or None,request.FILES or None, instance=post)
+    form = PostsCreateForm(request.POST or None,
+                           request.FILES or None, instance=post)
     if form.is_valid():
         forms = form.save(commit=False)
         forms.user_id_id = request.user.id
@@ -76,36 +81,54 @@ def edit(request, id):
         "post": post
     })
 
+
+@login_required() 
 def details(request, id):
     post = Post.objects.get(id=id)
     data = {'post_id': post.id}
     comment = CommentsCreateForm(request.POST or None, initial=data)
     form = PostsCreateForm(request.POST or None)
+   
     is_liked = False
+    is_removed=False
     if post.likes.filter(id=request.user.id).exists():
         is_liked = True
- 
+
     return render(request, "posts/details.html", {
         "form": form,
         "post": post,
         "comment": comment,
         'is_liked': is_liked,
+        'is_removed':is_removed,
         'total_likes': post.total_likes(),
- 
+
     })
 
+
+@login_required() 
 def comment(request, id):
     post = Post.objects.get(id=id)
     data = {'post_id': post.id}
     comment = CommentsCreateForm(request.POST or None, initial=data)
+    
     if comment.is_valid():
         comments = comment.save(commit=False)
-        comments.user_id= request.user.id
+        comments.user_id = request.user.id
         comments.save()
+        if(request.user.username!=post.user_id.username):       
+
+            content = f'{request.user.first_name} {request.user.last_name} commented in your post'
+            Notification.objects.create(senderUser=request.user,RecieverUser=post.user_id,content=content ,  post=post)
+
         return redirect("details", id=post.id)
     return HttpResponseRedirect(post.get_absolute_url())
 
-
+@login_required()   
+def delete_comment(request):
+    post = request.POST.get('id')
+    comment = get_object_or_404(Comment, id=request.POST.get('comment_id'))
+    comment.delete()
+    return redirect("details", id=post)
 def like_post(request):
     # whenever "post_id" is clicked #esm el button
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
@@ -114,19 +137,25 @@ def like_post(request):
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
         is_liked = False
+        notifiction = Notification.objects.get(senderUser=request.user,RecieverUser=post.user_id,content=f'{request.user.first_name} {request.user.last_name} liked your post',  post=post ).delete()
+       
     else:
         # like post
         post.likes.add(request.user)
         is_liked = True
+        if(request.user.username!=post.user_id.username):       
+            content = f'{request.user.first_name} {request.user.last_name} liked your post'
+            Notification.objects.create(senderUser=request.user,RecieverUser=post.user_id,content=content,  post=post )
     # return render(request,"posts/details.html",
     # {
     #     "post":post,
     #     'is_liked':is_liked,
-    #     'total_likes': post.total_likes()
+    #     #     'total_likes': post.total_likes()
     # })
 
     return HttpResponseRedirect(post.get_absolute_url())
 
 
+@login_required() 
 def must_authenticate_view(request):
     return render(request, 'Posts/must_auth.html', {})

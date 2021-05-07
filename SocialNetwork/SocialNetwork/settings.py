@@ -35,15 +35,17 @@ LOGIN_URL = "/login"
 AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
-    'profanity',
+    
     'channels',
     # 'Users',
     'Chats',
     'Notifications',
     'Posts',
     'Groups',
+    # 'friends',
     # 'accounts',
     'crispy_forms',
+    
     'Users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,7 +81,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-           
+
         },
     },
 ]
@@ -100,10 +102,10 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'SocialNetwork',
-        'USER':'root',
-        'PASSWORD':'eiso2020',
-        'Host':'localhost',
+        'NAME': 'SocialNetwork',
+        'USER': 'root',
+        'PASSWORD': '0175471031',
+        'Host': 'localhost',
 
     }
 }
@@ -153,3 +155,10 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Users/media')
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'onair2424@gmail.com'
+EMAIL_HOST_PASSWORD = '0175471031'
+LOGIN_URL = '/users/login'

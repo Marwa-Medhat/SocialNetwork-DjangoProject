@@ -12,6 +12,7 @@
     <h1>List of Groups</h1>
     {%for group in groups%}
     <li class="list-group-item" style="  position: relative; cursor: pointer;">
+<<<<<<< HEAD
         <a href="{% url 'groupdetails' group.id %}">{{ group.name }}</a> {% if request.user.username == group.owner.username %}
         <a href="{% url 'deletegroup' group.id %}" class="btn btn-danger" style="position: absolute;
          bottom: 5px;
@@ -27,6 +28,10 @@
           view
            </a> {% elif request.user in group.members.all %}
         <a href="{% url 'group' group.id %}" class="btn btn-info" style="position: absolute;
+=======
+        <a href="{% url 'group' group.id %}">{{ group.name }}</a> {% if request.user.username == group.owner.username %}
+        <a href="" class="btn btn-success" style="position: absolute;
+>>>>>>> 183321935eb089d5402c0ac95a476c069800be88
         bottom: 5px;
         right: 92px;
         color: white;">
@@ -38,13 +43,17 @@
         color: white;">
         pending
          </a> {% elif request.user not in group.members.all %}
+<<<<<<< HEAD
         <a href="{% url 'joingroup' group.id %}" class="btn btn-success" style="position: absolute;
+=======
+        <a href="" class="btn btn-success" style="position: absolute;
+>>>>>>> 183321935eb089d5402c0ac95a476c069800be88
         bottom: 5px;
         right: 10px;
         color: white;">
         Join
          </a> {% elif request.user in group.members.all %}
-        <a href="{% url 'friendRequest' user.id %}" class="btn btn-danger" style="position: absolute;
+        <a href="" class="btn btn-danger" style="position: absolute;
          bottom: 5px;
          right: 10px;
          color: white;">

@@ -1,4 +1,5 @@
 {% extends "layouts/main.html"%}
+{% load static %}
 {%block body%}
 <h2>Post</H2>
 <div class=" mt-3 left">
@@ -56,24 +57,33 @@
               
             {% if not post.post.all %}
               <p></p>
+              
                {% else %}
               {% for comment in post.post.all %}
                  <div class="ml-4 "><strong class="h4"> <img src="{{comment.user.profile_avatar.url}}" width="40px" height="40px;" class="p-10 rounded-circle"> 
                  
                  
                    <a href="{% url 'userprofile' comment.user_id %}" > {{comment.user.first_name }}   {{comment.user.last_name }}</a></strong>
+                 {% if comment.user.id == request.user.id %}                
                  <p class="text-muted">{{comment.creation_date_time}}</p>
+                 <form action="{% url 'delete_comment'  %}" method="POST">
+                                  {% csrf_token %}
+                   <input type='hidden' value='{{post.id}}' name='id'>
+                   <input type="hidden" name="comment_id" value="{{comment.id}}" />
+                            <button type="submit" class="border-0 float-right">
+                                       <i class="bi bi-trash text-danger"></i>
+                                     </button>
+                            </form>
+                {% endif%}
                  </div>
-                  {% load profanity %}
+                 
                  <div class="ml-4 bg-light  rounded-pill w-50">
-                
+                 
                   {{form.media}}
-                 {% with sentence=comment.content %} 
+                 {{comment.content }}
+                 
 
-                    {{ sentence | censor }}
-                  {% endwith %}
-                {% comment %} {{form.media}}
-                 {{comment.content}} {% endcomment %}
+               
                  </div> 
                  <hr>
           
@@ -81,7 +91,9 @@
              
             {% endif %}
            
-          
+          </div>
+
+
             <form action="{% url 'comment' post.id %}" method="post">
               {% load crispy_forms_tags %}
               {%csrf_token%}
@@ -90,19 +102,36 @@
            
                    {{ comment|crispy}}
                    
-                   <button type="submit" class="btn btn-primary rounded-pill float-right" value="{{post.id}}">Add a comment</button>
+                   
+                   <button type="submit" class="btn btn-primary rounded-pill float-right" value="{{post.id}}" id="comment">Add a comment</button>
                   </div>  
                
             </form>  
      
       </div>       
-    </div>   
+       
   </div>
   
- 
+  {{post.user_id.username|json_script:"postusername"}}
 
  <a class="btn btn-warning ml-5 mb-5" href="{% url 'index' %}">Back</a>
 </div>
+<script src="{% static 'js/reconnecting.js' %}"></script>
+<script>
 
+document.getElementById('comment').onclick= function (e){
+// console.log(postUserName)
+const postUserName = JSON.parse(document.getElementById('postusername').textContent);  
+
+const notificationSocket= new ReconnectingWebSocket(`ws://${window.location.host}/ws/notifications/${postUserName}`);  
+  notificationSocket.send(JSON.stringify({
+    
+    "command":"start"
+  }))}
+
+
+  
+  
+</script>
 {% endblock %}
 
