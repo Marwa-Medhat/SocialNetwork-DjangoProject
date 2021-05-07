@@ -19,11 +19,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", include("django.contrib.auth.urls")),
+    #path("", include("django.contrib.auth.urls")),
     path('admin/', admin.site.urls),
     path('chat/' , include("Chats.urls")),
     path('users/', include('Users.urls')),
-    path('posts/', include('Posts.urls')),
+    path('', include('Posts.urls')),
     path('notification/', include('Notifications.urls')),
     path('groups/', include('Groups.urls')),
    

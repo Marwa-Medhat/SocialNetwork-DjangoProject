@@ -18,10 +18,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SocialNetwork.settings')
 # application = get_asgi_application()
 application = ProtocolTypeRouter({
     "http": AsgiHandler(),
-    # Just HTTP for now. (We can add other protocols later.)
     "websocket": AuthMiddlewareStack(
         URLRouter(
             Chats.routing.websocket_urlpatterns
         )
     ),
+    
 })

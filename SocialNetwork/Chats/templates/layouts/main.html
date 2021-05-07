@@ -105,7 +105,17 @@ const mynotificationSocket= new ReconnectingWebSocket(`ws://${window.location.ho
 const notificationBdget= document.getElementById('notification')
 const messageBdget= document.getElementById('messages')
 const requestsBdget= document.getElementById('requests')
+mynotificationSocket.onopen = function(e){
+    mynotificationSocket.send(JSON.stringify({
+           
+         
+           'currentuser': UserName,
+           
+           
+          
+       })); 
 
+}
 mynotificationSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
         notificationBdget.textContent=data['notification']; 

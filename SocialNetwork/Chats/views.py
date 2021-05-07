@@ -3,6 +3,7 @@ from django.db.models import Q
 from.models import rooms
 from Users.models import CustomUser
 from django.contrib.auth.decorators import login_required
+from .models import Chat
 # Create your views here.
 
 
@@ -10,9 +11,10 @@ from django.contrib.auth.decorators import login_required
 def index(request):
        
         userrooms= rooms.objects.filter(Q(user1=request.user) | Q(user2=request.user))
-        for room in userrooms :
-            room.isread =True
-            room.save()
+        messages = Chat.objects.filter(RecieverUser=request.user , isread=False)
+        for message in messages :
+            message.isread =True
+            message.save()
         return render(request, 'chat.html', {
            
            'username':request.user.username,

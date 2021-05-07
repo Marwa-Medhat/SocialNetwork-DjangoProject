@@ -6,13 +6,17 @@ from Users.models import CustomUser , FriendRequest
 from django.db.models import Q 
 from django.core.mail import EmailMultiAlternatives
 from Notifications.models import Notification
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 class ChatConsumer(WebsocketConsumer):
     def message_to_json(self, message):
+     
         return {
             'sender':message.senderUser.username,
             'message':message.content,
-            'date':str(message.date)
+            'date':str(message.date),
+            'reciever':message.RecieverUser.username
         }         
     def messages_to_json(self , messages):
         result = [];
@@ -71,7 +75,7 @@ class ChatConsumer(WebsocketConsumer):
             'message': self.message_to_json(message)
         }
         # self.send_email(Reciver.email)
-        return self.send_chat_message(content)
+        return self.send_chat_message(content ,  Reciver , sender)
        
 
 
@@ -105,7 +109,7 @@ class ChatConsumer(WebsocketConsumer):
         print(self.room_name)
         self.commands[data['command']](self, data)
 
-    def send_chat_message(self , message):    
+    def send_chat_message(self , message , Reciever, sender):    
         # Send message to room group
        
         async_to_sync( self.channel_layer.group_send)(
@@ -116,26 +120,39 @@ class ChatConsumer(WebsocketConsumer):
                 
             }
         )
+   
 
     # Receive message from room group
     def chat_message(self, event):
+     
       
        message = event['message']
+      
+     
        self.send(text_data=json.dumps(message))
+      
+       self.send_email(message)
+       
        
     def send_message(self, message):
         self.send(text_data=json.dumps(message))
 
-    def send_email(self , email):
-        print("email" + email)
-        subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
-        text_content = 'This is an important message.'
-        html_content = '<p>This is an <strong>important</strong> message.</p>'
-        msg = EmailMultiAlternatives(subject, html_content, 'onarir', [email])
-        async_to_sync( msg.send() )   
+    def send_email(self , message ):
+        reciever =    message['message']['reciever']
+        sender = message['message']['sender']
+        RecieverUser = CustomUser.objects.get(username=reciever)
+        senderUser = CustomUser.objects.get(username=sender)
+        msg_plain = render_to_string('email/email.txt', {'username': f'{RecieverUser.first_name}{RecieverUser.last_name}' , 'Sender' : f'{senderUser.first_name}{senderUser.last_name}' , 'message' : message['message']['message']})
+        msg_html = render_to_string('email/email.html', {'username': f'{RecieverUser.first_name}{RecieverUser.last_name}' , 'Sender' : f'{senderUser.first_name}{senderUser.last_name}' , 'message' : message['message']['message']})
+        send_mail(
+               'email title',
+                msg_plain,
+               'onair',
+               [RecieverUser.email],
+               html_message=msg_html,)
 
 
-        # Send message to WebSocket
+    # =====  ======================================================================================================  # Send message to WebSocket
 class NotificationConsumer(WebsocketConsumer):
     def fetch_likes(self):
         pass
@@ -165,38 +182,43 @@ class NotificationConsumer(WebsocketConsumer):
      
 
         self.accept()
-        user = CustomUser.objects.get(username=self.user_name)
-        count_messages = Chat.objects.filter(RecieverUser=user).count();
-        count_notification = Notification.objects.filter(RecieverUser=user , seen=False).count();
-        count_rooms = rooms.objects.filter(Q(user1=user , isread=False) | Q(user2=user , isread=False)).count();
-        count_friend_request = FriendRequest.objects.filter( Reciever = user , status="send").count()
+        # user = CustomUser.objects.get(username=self.user_name)
+        # count_messages = Chat.objects.filter(RecieverUser=user).count();
+        # count_notification = Notification.objects.filter(RecieverUser=user , seen=False).count(); 
+        # count_rooms = rooms.objects.filter(Q(user1=user , isread=False) | Q(user2=user , isread=False)).count();
+        # count_friend_request = FriendRequest.objects.filter( Reciever = user , status="send").count()
 
-        self.send(text_data=json.dumps(
-            {
-                'messages' : count_rooms,
-                'notification' : count_notification,
-                'requests' : count_friend_request,
+        # self.send(text_data=json.dumps(
+        #     {
+        #         'messages' : count_rooms,
+        #         'notification' : count_notification,
+        #         'requests' : count_friend_request,
                 
                 
               
-            }
-        )) 
+        #     }
+        # )) 
         print("connected")  
     def receive(self, text_data):
+        
+        data= json.loads(text_data)
+        currentuser = data['currentuser']
         user = CustomUser.objects.get(username=self.user_name)
-        count_messages = Chat.objects.filter(RecieverUser=user).count();
-        count_rooms = rooms.objects.filter(Q(user1=user , isread=False) | Q(user2=user , isread=False)).count();
+        count_messages = Chat.objects.filter(RecieverUser=user , isread=False).count();     
+        if user.username == data['currentuser']:
+           count_rooms = rooms.objects.filter(Q(user1=user , isread=False) | Q(user2=user , isread=False)).count();
         count_notification = Notification.objects.filter(RecieverUser=user , seen=False).count();
+        count_friend_request = FriendRequest.objects.filter( Reciever = user , status="send").count()
         self.send(text_data=json.dumps(
             {
-                'messages' : count_rooms,
+                'messages' :  count_messages,
                 'notification' : count_notification,
+                'requests' : count_friend_request,
                 
               
             }
         )) 
     def disconnect(self, close_code):
-        # Leave room group
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name

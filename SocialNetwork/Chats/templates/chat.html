@@ -88,7 +88,7 @@
 	<div class="content">
 		<div class="contact-profile">
 			<img src="{% static 'profile/' %}{% if roomdetail.user1.username == request.user.username%}{{roomdetail.user2.profile_avatar}}{% else %}{{roomdetail.user1.profile_avatar }}{%endif%}" alt="" />
-			<p>{% if roomdetail.user1.username == request.user.username%}{{roomdetail.user2.first_name}}{% else %}{{roomdetail.first_name}}{%endif%}</p>
+			<p>{% if roomdetail.user1.username == request.user.username%}{{roomdetail.user2.first_name}} {{roomdetail.user2.last_name}}{% else %}{{roomdetail.user1.first_name}} {{roomdetail.user1.last_name}}{%endif%}</p>
 		
 		</div>
 		<div class="messages">
@@ -99,7 +99,7 @@
 		</div>
 		<div class="message-input">
 			<div class="wrap">
-			<input type="text" placeholder="Write your message..."  id="chat-message-input" value="ho" />
+			<input type="text" placeholder="Write your message..."  id="chat-message-input"  />
 			<i class="fa fa-paperclip attachment" aria-hidden="true" id="chat-log"></i>
 			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true" id="chat-message-submit"></i></button>
 			</div>
@@ -120,7 +120,7 @@
         const data = JSON.parse(e.data);
         if(data['command']=="message")
         {
-            console.log("message command")
+           
             for (let i = 0 ; i<data['messages'].length;i++){
                 createMessage(data['messages'][i])
                 
@@ -128,7 +128,7 @@
         }
         else if(data['command']=="new_message")
         {
-            console.log("new - message command")
+         
             createMessage(data['message'])
 
         }
@@ -140,10 +140,14 @@
         let sender = data['sender']
         console.log(data)
         let messagesList = document.createElement('li')
-        let image = document.createElement('img')
+        // let image = document.createElement('img')
         let content = document.createElement('p')
+		let date = document.createElement('p')
+		
         content.textContent=data['message']
-        image.src = "http://emilcarlsson.se/assets/mikeross.png"
+		date.textContent= data['date']
+
+        
         if(sender===username){
             messagesList.className="sent"
         }
@@ -152,11 +156,12 @@
             messagesList.className="replies"
 
         }
-        messagesList.appendChild(image)
+       
         messagesList.appendChild(content)
+		// messagesList.appendChild(date)
         document.querySelector('.messages ul').appendChild(messagesList)
         $('.message-input input').val(null);
-	    $('.contact.active .preview').html(`<span>${data['sender']===username?"You :":data['sender'] + ":"}</span>` + data['message'] );
+	    //$('.contact.active .preview').html(`<span>${data['sender']===username?"You :":data['sender'] + ":"}</span>` + data['message'] );
 	//  $(".messages ul ").animate({ scrollTop: $(document).height() }, "fast");
 
     }
@@ -199,10 +204,10 @@
             'from':username
            
         }));
-		notificationSocket.send(JSON.stringify({
+// 		notificationSocket.send(JSON.stringify({
     
-        "command":"start"
-  }))
+//         "command":"start"
+//   }))
     
 };
 
