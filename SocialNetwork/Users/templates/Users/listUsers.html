@@ -7,8 +7,9 @@
     <title>all users</title>
   </head>
   <body>
-    {{request.user.username}} {% for user in users %} 
-     {% if user.username != request.user.username %} 
+    {{request.user.username}} {% for user in users %}
+    <div></div>
+    {% if user.username != request.user.username %}
     <li class="list-group-item" style="position: relative">
       <img
         src="{% static 'profile/' %}{{user.profile_avatar}}"
@@ -17,14 +18,14 @@
       <a href="{% url 'userprofile' user.id %}"
         >{{user.first_name }} {{user.last_name }}</a
       >
-      {%if  user.id in sended %}
-      <a
-        href=""
-        class="btn btn-danger"
-        style="position: absolute; bottom: 15px; right: 10px; color: white"
-      >
-        cancel Friend request
-      </a>
+      {%if user.id in sended %}
+      <form action="{% url 'cancelFriendrequest' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="profile_pk" value="{{user.id}}" />
+        <button type="submit" class="btn btn-danger mt-2">
+          cancel friend request
+        </button>
+      </form>
       {%elif user.id in recieved %}
       <form action="{% url 'accept-invite' %}" method="POST">
         {% csrf_token %}
@@ -42,18 +43,15 @@
           Reject invite
         </button>
       </form>
-     {%elif user.id in friends%}
-     <a
-     href=""
-     class="btn btn-danger"
-     style="position: absolute; bottom: 15px; right: 10px; color: white"
-   >
-     friend
-   </a>
+      {%elif user.id in friends%}
+      <form action="{% url 'RemoveFriend' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="profile_pk" value="{{user.id}}" />
+        <button type="submit" class="btn btn-danger mt-2">Remove Friend</button>
+      </form>
 
       {%else %}
 
-    
       <form action="{% url 'send-invite' %}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="profile_pk" value="{{user.id}}" />
@@ -65,7 +63,9 @@
 
       {% endif %}
     </li>
-     {% endif %} {% endfor %}
+    {% endif %}
+    <div></div>
+    {% endfor %}
   </body>
   {% endblock %}
 </html>

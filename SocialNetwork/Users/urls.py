@@ -15,6 +15,7 @@ urlpatterns = [
     path('my-invites/reject/', views.reject_invatation, name='reject-invite'),
     path('send-invite/', views.send_invatation, name='send-invite'),
     path('friendslist/', views.friendslist, name='friendslist'),
-
+    path('cancelFriendrequest',views.cancelFriendrequest,name='cancelFriendrequest'),
+    path('RemoveFriend',views.RemoveFriend,name='RemoveFriend'),
     # path("editprofile", views.editprofile, name="editprofile"),
 ]
