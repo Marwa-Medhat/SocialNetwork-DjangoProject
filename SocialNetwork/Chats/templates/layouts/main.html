@@ -17,7 +17,6 @@
 	         
 	        </button>
         <a href="{% url 'index' %}" class="mr-auto text-white h4"> <i class="bi bi-house ml-4"></i>My Home </a>
-       <p  style="color: white;"> {{request.user.first_name}}</p>
         <div class="dropdown">
             <a class="btn" role="button" href="{% url 'chat' %}" ><i class="bi bi-chat text-white"><span class="badge badge-pill badge-danger" id="messages"></span></i> </a>
           
@@ -34,7 +33,7 @@
         </div>
         
  <div class="dropdown" >
-            <a  class="btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" ><img src="{{request.user.profile_avatar.url}}" width="30px" height="30px;" class="p-10 rounded-circle"> </a>
+            <a  class="btn text-white" role="button" id="dropdownMenuLink" data-toggle="dropdown" >{{request.user.first_name}} <img src="{{request.user.profile_avatar.url}}" width="30px" height="30px;" class="p-10 rounded-circle"> </a>
                 <div class="dropdown-menu dropdown-menu-right" >
                        <a class="dropdown-item " href="{% url 'logout' %}" >
                           <i class="bi bi-box-arrow-in-right ml-3">logout</i> 
