@@ -18,31 +18,31 @@
 	        </button>
         <a href="{% url 'index' %}" class="mr-auto text-white h4"> <i class="bi bi-house ml-4"></i>My Home </a>
         <div class="dropdown">
-            <a class="btn" role="button" href="{% url 'chat' %}" ><i class="bi bi-chat text-white"><span class="badge badge-pill badge-danger" id="messages"></span></i> </a>
-          
+            <a class="btn" role="button" href="{% url 'chat' %}"><i class="bi bi-chat text-white"><span class="badge badge-pill badge-danger" id="messages"></span></i> </a>
+
 
         </div>
         <div class="dropdown">
-          <a href="{% url 'notification' %}" class="btn" role="button" ><i class="bi bi-bell text-white"><span class="badge badge-pill badge-danger" id="notification"></span></i> </a>
-         
+            <a href="{% url 'notification' %}" class="btn" role="button"><i class="bi bi-bell text-white"><span class="badge badge-pill badge-danger" id="notification"></span></i> </a>
 
-      </div>
-         <div class="dropdown" >
-            <a  class="btn" role="button" id="dropdownMenuLink" href="{%url 'my-invites-view' %}"><i class="bi bi-person-plus text-white" > <span class="badge badge-pill badge-danger" id="requests"></span></i> </a>
-                    
+
         </div>
-        
- <div class="dropdown" >
-            <a  class="btn text-white" role="button" id="dropdownMenuLink" data-toggle="dropdown" >{{request.user.first_name}} <img src="{{request.user.profile_avatar.url}}" width="30px" height="30px;" class="p-10 rounded-circle"> </a>
-                <div class="dropdown-menu dropdown-menu-right" >
-                       <a class="dropdown-item " href="{% url 'logout' %}" >
-                          <i class="bi bi-box-arrow-in-right ml-3">logout</i> 
-                        </a> 
-                      
-                </div>
-                              
+        <div class="dropdown">
+            <a class="btn" role="button" id="dropdownMenuLink" href="{%url 'my-invites-view' %}"><i class="bi bi-person-plus text-white" > <span class="badge badge-pill badge-danger" id="requests"></span></i> </a>
+
         </div>
-      
+
+        <div class="dropdown">
+            <a class="btn text-white" role="button" id="dropdownMenuLink" data-toggle="dropdown">{{request.user.first_name}} <img src="{{request.user.profile_avatar.url}}" width="30px" height="30px;" class="p-10 rounded-circle"> </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item " href="{% url 'logout' %}">
+                    <i class="bi bi-box-arrow-in-right ml-3">logout</i>
+                </a>
+
+            </div>
+
+        </div>
+
 
 
     </div>
@@ -55,10 +55,11 @@
 
                 <ul class="list-unstyled components mb-5">
                     <li class="active">
-                    <img src="{{request.user.profile_avatar.url}}" width="200px" height="200px;" class="p-10 rounded-circle">
-                        <h2>{{request.user.first_name}} {{request.user.last_name}}<h2>
-                     </li>  
-                     <li class="active"> 
+                        <img src="{{request.user.profile_avatar.url}}" width="200px" height="200px;" class="p-10 rounded-circle">
+                        <h2>{{request.user.first_name}} {{request.user.last_name}}
+                            <h2>
+                    </li>
+                    <li class="active">
                         <a href="{% url 'profile' %}"><i class="bi bi-person"></i>My Profile</a>
 
                         <li>
@@ -71,17 +72,17 @@
 
                         </li>
                         <li>
-                            <a href="" <i class="bi bi-people-fill"></i>Your groups</a>
+                            <a href="{%url 'yourgroups'%}" <i class="bi bi-people-fill"></i>Your groups</a>
 
                         </li>
                         <li>
-                       
+
                             <a href="{%url 'friendslist' %}" <i class="bi bi-people-fill"></i>friends</a>
                         </li>
                         <li>
                             <a href="{%url 'listusers'%}" <i class="bi bi-people-fill"></i> add friends</a>
                         </li>
-            
+
                 </ul>
             </div>
         </nav>
@@ -97,20 +98,21 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 {{ request.user.username|json_script:"myusername" }}
+
 </html>
 <script src="{% static 'js/reconnecting.js' %}"></script>
 <script>
-const UserName = JSON.parse(document.getElementById('myusername').textContent);    
-const mynotificationSocket= new ReconnectingWebSocket(`ws://${window.location.host}/ws/notifications/${ UserName}`);
-const notificationBdget= document.getElementById('notification')
-const messageBdget= document.getElementById('messages')
-const requestsBdget= document.getElementById('requests')
+    const UserName = JSON.parse(document.getElementById('myusername').textContent);
+    const mynotificationSocket = new ReconnectingWebSocket(`ws://${window.location.host}/ws/notifications/${ UserName}`);
+    const notificationBdget = document.getElementById('notification')
+    const messageBdget = document.getElementById('messages')
+    const requestsBdget = document.getElementById('requests')
 
-mynotificationSocket.onmessage = function(e) {
+    mynotificationSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
-        notificationBdget.textContent=data['notification']; 
-        messageBdget.textContent=data['messages']
-        requestsBdget.textContent=data['requests']
-     
-}
+        notificationBdget.textContent = data['notification'];
+        messageBdget.textContent = data['messages']
+        requestsBdget.textContent = data['requests']
+
+    }
 </script>

@@ -21,5 +21,14 @@ from . import views
 urlpatterns = [
     path('create', views.create, name='creategroup'),
     path('', views.index, name='listgroup'),
+    path('requests/accept/<int:groupid>/<int:userid>', views.accept, name='accept'),
+    path('requests/decline/<int:groupid>/<int:userid>', views.decline, name='decline'),
+    path('requests/<int:id>', views.requestsingroup, name='grouprequests'),
+    path('delete/<int:groupid>/<int:userid>', views.delete, name='delete'),
+    path('deletegroup/<int:id>', views.deletegroup, name='deletegroup'),
+    path('members/<int:id>', views.membersingroup, name='groupmembers'),
+    path('join/<int:id>', views.joingroup, name='joingroup'),
+    path('groupdetails/<int:id>', views.groupDetails, name='groupdetails'),
     path('<int:id>', views.viewGroup, name='group'),
+    path('/yourgroups', views.groups, name='yourgroups'),
 ]

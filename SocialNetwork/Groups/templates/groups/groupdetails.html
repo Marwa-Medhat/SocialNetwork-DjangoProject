@@ -1,0 +1,53 @@
+{% extends "layouts/main.html"%} {%block body%} {% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>all users</title>
+</head>
+
+<body>
+    <h1>Group details</h1>
+
+    <li class="list-group-item" style="  position: relative;">
+        Group name: {{ group.name}}
+
+    </li>
+
+    <li class="list-group-item" style="  position: relative;">
+        Group owner: {{ group.owner.first_name}} {{ group.owner.last_name}}
+
+    </li>
+    <li class="list-group-item" style="  position: relative;">
+        Group members: {{ membersCount }}
+
+    </li>
+    <li class="list-group-item" style="  position: relative;">
+        Creation date: {{ group.creation_date}}
+
+    </li>
+    <li class="list-group-item" style="  position: relative;">
+        Group Details: {{ group.description}}
+
+    </li>
+    <div style="text-align: center; margin-top: 20px;">
+        {% if request.user not in group.members.all and request.user.username != group.owner.username %}
+        <a href="{% url 'joingroup' group.id %}" class="btn btn-success" style="position: absolute;
+      
+        color: white;">
+        Join
+        {% endif %}
+         </a> {% if request.user in group.requests.all %}
+        <a href="" class="btn btn-warning" style="position: absolute;
+     
+        color: white;">
+        pending
+         </a> {% endif %}
+    </div>
+
+</body>
+{% endblock %}
+
+</html>
