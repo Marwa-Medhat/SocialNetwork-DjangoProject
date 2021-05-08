@@ -63,15 +63,18 @@ def userprofile(request, id):
     user = CustomUser.objects.get(pk=id) #al user lma bdos 3la click
     # user1 = CustomUser.objects.get(pk=request.user.id)
     # print(user1) ##al user 2li da5l
-    # findfriend = []
+    findfriend = []
     # friends = Friend.objects.all()
     # for friend in friends:
     #     if request.user.username == friend.user1.username: # lw al user 2li da5l howa howa al sender
     #         print(friend.user2)
     #         findfriend.append(friend.user2) #yb2a dol as7abo 
 
-    findfriend = Friend.objects.filter(
+    friends = Friend.objects.filter(
     Q(user1=request.user , user2 =user ) | Q(user2=request.user , user1=user))
+    for friend in friends:
+        findfriend.append(friend.user1.username)
+        findfriend.append(friend.user2.username)
     posts = Post.objects.all()
     return render(request, 'Users/userprofile.html',
                   {
